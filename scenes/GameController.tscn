@@ -1,53 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwsnqcuhr2xst"]
+[gd_scene load_steps=4 format=3 uid="uid://uaqhtbpw28c0"]
 
-[ext_resource type="PackedScene" uid="uid://dynq8fpolkn28" path="res://scenes/Dungeon.tscn" id="1_betrt"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="2_s5eca"]
-[ext_resource type="Texture2D" uid="uid://d2i3j4fehxoe" path="res://assets/textures/man_on_fire_draft.png" id="2_wut27"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_di0kf"]
-atlas = ExtResource("2_wut27")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hv0gh"]
-atlas = ExtResource("2_wut27")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ukneh"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_di0kf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hv0gh")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
-}]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_307j3"]
-
-[gd_scene load_steps=3 format=3 uid="uid://bwsnqcuhr2xst"]
-
-[ext_resource type="PackedScene" uid="uid://dynq8fpolkn28" path="res://scenes/Dungeon.tscn" id="1_betrt"]
-[ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_vit73"]
+[ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_7y3ky"]
+[ext_resource type="PackedScene" uid="uid://dynq8fpolkn28" path="res://scenes/Dungeon.tscn" id="1_66ikf"]
+[ext_resource type="PackedScene" uid="uid://vnlt4wxkt7lw" path="res://scenes/Player.tscn" id="3_cxpec"]
 
 [node name="GameController" type="Node2D"]
-script = ExtResource("1_vit73")
+script = ExtResource("1_7y3ky")
 
-[node name="Dungeon" parent="." instance=ExtResource("1_betrt")]
+[node name="Dungeon" parent="." instance=ExtResource("1_66ikf")]
+
+[node name="Player" parent="." instance=ExtResource("3_cxpec")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("2_s5eca")
-speed = 50.0
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-sprite_frames = SubResource("SpriteFrames_ukneh")
-animation = &"walk"
-frame_progress = 0.81315
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CircleShape2D_307j3")
