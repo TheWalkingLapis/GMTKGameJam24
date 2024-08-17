@@ -6,13 +6,45 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	generate_dungeon_layer()
+	generate_layer_with_CA(0.45)
+	#generate_dungeon_layer()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("generate_layer"):
-		generate_dungeon_layer()
+		generate_layer_with_CA(0.45)
+		#generate_dungeon_layer()
+
+func generate_layer_with_CA(prob: float, birth_thresh: int = 5, survival_thresh:int = 4, num_iters: int = 4):
+	var cells = []
+	for y in range(max_dungeon_size.y):
+		cells.append([])
+		for x in range(max_dungeon_size.x):
+			cells[y].append(randf() <= prob)
+	var cells_new = cells.duplicate(true)
+	for iter in range(num_iters):
+		for y in range(max_dungeon_size.y):
+			for x in range(max_dungeon_size.x):
+				var num_neighbours = 0
+				for nx in range(-1, 2):
+					for ny in range(-1, 2):
+						if nx == 0 and ny == 0: continue
+						var idx_x = x + nx
+						var idx_y = y + ny
+						if idx_x >= 0 and idx_x < max_dungeon_size.x and idx_y >= 0 and idx_y < max_dungeon_size.y:
+							if cells[idx_y][idx_x]: num_neighbours += 1
+				# is alive atm
+				if cells[y][x]:
+					cells_new[y][x] = num_neighbours >= survival_thresh
+				# is dead atm
+				else:
+					cells_new[y][x] = num_neighbours >= birth_thresh
+		cells = cells_new
+		for y in range(max_dungeon_size.y):
+			for x in range(max_dungeon_size.x):
+				var tile_idx = 1 if cells[y][x] else 0
+				dungeon_tiles.set_cell(Vector2i(x,y), 0, Vector2i(tile_idx, 0))
 
 func generate_dungeon_layer():
 	dungeon_tiles.clear()
