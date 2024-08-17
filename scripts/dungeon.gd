@@ -1,13 +1,26 @@
 extends Node2D
 class_name Dungeon
 
+class Room:
+	var layout: Room_Layout
+	var layout_id: int
+	var local_coords: Vector2i
+	static func create(layout_, layout_id_, coords_) -> Room:
+		var room:= Room.new()
+		room.layout_id = layout_id_
+		room.layout = layout_
+		room.local_coords = coords_
+		return room
+		
+
 @export var max_dungeon_size: Vector2i = Vector2(10, 10)
 
-var room_layouts: Array[Room]
+var room_layouts: Array[Room_Layout]
 var num_room_layouts: int
 var room_patterns: Dictionary
 @onready var dungeon_tile_map: TileMapLayer = $"Dungeon_TileMap"
 var dungeon_occupation_grid: Array[Array] = []
+var dungeon_rooms: Dictionary
 static var tiles_per_room_unit: int = 15
 
 func _ready():
@@ -19,7 +32,7 @@ func _ready():
 	
 	# fetch room layouts
 	for child in $Rooms.get_children():
-		if child is Room:
+		if child is Room_Layout:
 			room_layouts.append(child)
 	num_room_layouts = room_layouts.size()
 	generate_room_patterns()
@@ -33,6 +46,7 @@ func _process(delta):
 
 func clear_layer():
 	dungeon_tile_map.clear()
+	dungeon_rooms.clear()
 	for y in range(max_dungeon_size.y):
 		for x in range(max_dungeon_size.x):
 			dungeon_occupation_grid[y][x] = false
@@ -55,6 +69,8 @@ func get_cardinal_neighbour_count(grid_coord: Vector2i) -> int:
 
 func generate_dungeon_layer(num_rooms: int) -> bool:
 	var room_counter = 1
+	var spawn_room_candidates = get_room_layout_with_min_doors(2)
+	# TODO select random room layout as spawn room
 	spawn_room_at_grid(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2), 0)
 	
 	var queue: Array[Vector2i]
@@ -117,7 +133,24 @@ func spawn_room_at_grid(grid_coord: Vector2i, room_layout_idx: int) -> bool:
 	for x in range(room.size_dungeon_units.x):
 		for y in range(room.size_dungeon_units.y):
 			dungeon_occupation_grid[grid_coord.y + y][grid_coord.x + x] = true
+			var room_instance = Room.create(room, room_layout_idx, grid_coord)
+			dungeon_rooms[Vector2i(x,y)] = room_instance
 	return true
+
+func get_room_layout_with_exact_doors(num_doors: int) -> Array[int]:
+	var rooms = []
+	for idx in range(num_room_layouts):
+		var room = room_layouts[idx]
+		if room.get_num_doors() == num_doors:
+			rooms.append(room)
+	return rooms
+func get_room_layout_with_min_doors(num_doors: int) -> Array[int]:
+	var rooms = []
+	for idx in range(num_room_layouts):
+		var room = room_layouts[idx]
+		if room.get_num_doors() >= num_doors:
+			rooms.append(room)
+	return rooms
 
 func generate_room_patterns():
 	for id in range(room_layouts.size()):
