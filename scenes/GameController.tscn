@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwsnqcuhr2xst"]
+[gd_scene load_steps=3 format=3 uid="uid://bwsnqcuhr2xst"]
 
 [ext_resource type="PackedScene" uid="uid://dynq8fpolkn28" path="res://scenes/Dungeon.tscn" id="1_betrt"]
+[ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_vit73"]
 
 [node name="GameController" type="Node2D"]
+script = ExtResource("1_vit73")
 
 [node name="Dungeon" parent="." instance=ExtResource("1_betrt")]
 

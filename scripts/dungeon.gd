@@ -23,12 +23,13 @@ func _ready():
 			room_layouts.append(child)
 	num_room_layouts = room_layouts.size()
 	generate_room_patterns()
-	#$Camera2D.position = dungeon_tile_map.map_to_local(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
 
 func _process(delta):
 	if Input.is_action_just_pressed("generate_layer"):
 		clear_layer()
-		generate_dungeon_layer()
+		while(not generate_dungeon_layer(12)): clear_layer()
+	if Input.is_action_just_pressed("clear_layer"):
+		clear_layer()
 
 func clear_layer():
 	dungeon_tile_map.clear()
@@ -52,14 +53,12 @@ func get_cardinal_neighbour_count(grid_coord: Vector2i) -> int:
 			count += 1
 	return count
 
-func generate_dungeon_layer():
-	var num_rooms = 12
-	#spawn_room_at_grid(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2), 0)
-	spawn_room_at_grid(Vector2i(0,0), 0)
+func generate_dungeon_layer(num_rooms: int) -> bool:
+	var room_counter = 1
+	spawn_room_at_grid(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2), 0)
 	
 	var queue: Array[Vector2i]
-	#queue.push_back(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
-	queue.push_back(Vector2i(0,0))
+	queue.push_back(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
 	while(not queue.is_empty()):
 		var coord = queue.pop_front()
 		for i in range(4):
@@ -85,7 +84,7 @@ func generate_dungeon_layer():
 						next_dir.y += 1
 					else:
 						continue
-			if num_rooms <= 0:
+			if room_counter >= num_rooms:
 				break
 			if randf() < 0.5:
 				continue
@@ -95,11 +94,14 @@ func generate_dungeon_layer():
 				continue
 			spawn_room_at_grid(next_dir, 0)
 			queue.push_back(next_dir)
-			num_rooms -= 1
-		if num_rooms <= 0:
+			room_counter += 1
+		if room_counter >= num_rooms:
 			break
-	
-func get_tilemap_corner_from_grid_coords(grid_coords: Vector2i):
+	return room_counter > 0.5 * num_rooms
+
+func grid_to_world_pos(grid_coords: Vector2i) -> Vector2:
+	return (16 * grid_coords * tiles_per_room_unit) as Vector2 + Vector2(16 * 0.5 * tiles_per_room_unit, 16 * 0.5 * tiles_per_room_unit)
+func get_tilemap_corner_from_grid_coords(grid_coords: Vector2i) -> Vector2i:
 	return grid_coords * tiles_per_room_unit
 	
 func spawn_room_at_grid(grid_coord: Vector2i, room_layout_idx: int) -> bool:
