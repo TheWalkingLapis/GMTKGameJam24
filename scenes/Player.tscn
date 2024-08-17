@@ -1,13 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://vnlt4wxkt7lw"]
+[gd_scene load_steps=7 format=3 uid="uid://vnlt4wxkt7lw"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wya4p"]
+[ext_resource type="Texture2D" uid="uid://d2i3j4fehxoe" path="res://assets/textures/man_on_fire_draft.png" id="2_ijpqu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bdiql"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_d33vp"]
+atlas = ExtResource("2_ijpqu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljag0"]
+atlas = ExtResource("2_ijpqu")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jlo0q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d33vp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljag0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_wya4p")
+speed = 100.0
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bdiql")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jlo0q")
+animation = &"walk"
+frame = 1
+frame_progress = 0.3322

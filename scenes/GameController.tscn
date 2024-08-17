@@ -10,5 +10,6 @@ script = ExtResource("1_7y3ky")
 [node name="Dungeon" parent="." instance=ExtResource("1_66ikf")]
 
 [node name="Player" parent="." instance=ExtResource("3_cxpec")]
+speed = 100.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
