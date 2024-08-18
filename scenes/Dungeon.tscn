@@ -12,7 +12,6 @@ max_dungeon_size = Vector2i(20, 20)
 tile_set = ExtResource("2_hceky")
 
 [node name="CopyTileMapLayer" type="TileMapLayer" parent="."]
-visible = false
 tile_set = ExtResource("2_hceky")
 
 [node name="Room_Layout" type="Node2D" parent="."]

@@ -1,9 +1,12 @@
-[gd_scene load_steps=26 format=3 uid="uid://vnlt4wxkt7lw"]
+[gd_scene load_steps=28 format=3 uid="uid://vnlt4wxkt7lw"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wya4p"]
-[ext_resource type="Texture2D" uid="uid://bn7u2wmp51fbg" path="res://assets/textures/character_sprites.png" id="2_trcvs"]
+[ext_resource type="Texture2D" uid="uid://cln4wixxhcvlm" path="res://assets/textures/character_sprites.png" id="2_trcvs"]
+[ext_resource type="PackedScene" uid="uid://ep6dk460370p" path="res://scenes/modules/CombatModule.tscn" id="3_uiaik"]
+[ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="4_xijir"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bdiql"]
+radius = 5.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2h68"]
 atlas = ExtResource("2_trcvs")
@@ -171,6 +174,8 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_wya4p")
 speed = 100.0
 metadata/_edit_group_ = true
@@ -180,5 +185,8 @@ shape = SubResource("CircleShape2D_bdiql")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jlo0q")
-animation = &"attack_fire"
-frame_progress = 0.230021
+animation = &"walk"
+
+[node name="CombatModule" parent="." instance=ExtResource("3_uiaik")]
+
+[node name="HealthState" parent="." instance=ExtResource("4_xijir")]
