@@ -35,6 +35,10 @@ class Room:
 				room.door_slots["W"] = layout_.door_directions["N"]
 		return room
 
+@export_category("Debug")
+@export var generation_output: bool = false
+@export_category("Settings")
+
 @export var max_dungeon_size: Vector2i = Vector2(10, 10)
 
 var room_layouts: Array[Room_Layout]
@@ -99,73 +103,74 @@ func generate_dungeon_layer(num_rooms: int) -> bool:
 	queue.push_back(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
 	while(not queue.is_empty()):
 		var coord = queue.pop_front()
-		print("--------------")
-		print(room_counter)
-		print(dungeon_rooms.keys().size())
-		print(dungeon_rooms.keys())
-		print("--------------")
-		print("Room: " + str(coord))
+		if generation_output:
+			print("--------------")
+			print(room_counter)
+			print(dungeon_rooms.keys().size())
+			print(dungeon_rooms.keys())
+			print("--------------")
+			print("Room: " + str(coord))
 		for i in range(4):
 			var next_dir = coord
 			match i:
 				0: # N
-					print("    north?")
+					if generation_output: print("    north?")
 					if not dungeon_rooms[coord].door_slots["N"]:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 					if not coord.y == 0:
 						next_dir.y -= 1
 					else:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 					
 				1: # E
-					print("    east?")
+					if generation_output: print("    east?")
 					if not dungeon_rooms[coord].door_slots["E"]:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 					if not coord.x == max_dungeon_size.x - 1:
 						next_dir.x += 1
 					else:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 				2: # S
-					print("    south?")
+					if generation_output: print("    south?")
 					if not dungeon_rooms[coord].door_slots["S"]:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 					if not coord.y == max_dungeon_size.y - 1:
 						next_dir.y += 1
 					else:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 				3: # W
-					print("    west?")
+					if generation_output: print("    west?")
 					if not dungeon_rooms[coord].door_slots["W"]:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
 					if not coord.x == 0:
 						next_dir.x -= 1
 					else:
-						print("    X no")
+						if generation_output: print("    X no")
 						continue
-			print("    candidate: " + str(next_dir))
+			if generation_output:print("    candidate: " + str(next_dir))
 			if room_counter >= num_rooms:
-				print("        X max rooms reached")
+				if generation_output: print("        X max rooms reached")
 				break
 			if randf() < 0.5:
-				print("        X random continue")
+				if generation_output: print("        X random continue")
 				continue
 			if dungeon_occupation_grid[next_dir.y][next_dir.x]:
-				print("        X room exists")
+				if generation_output: print("        X room exists")
 				continue
 			if get_cardinal_neighbour_count(next_dir) > 1:
-				print("        X too many neighbours (" + str(get_cardinal_neighbour_count(next_dir)) + ")")
+				if generation_output: print("        X too many neighbours (" + str(get_cardinal_neighbour_count(next_dir)) + ")")
 				continue
 			var next_room_idx = randi() % room_layouts.size()
-			print("        layout: " + str(next_room_idx))
+			if generation_output: print("        layout: " + str(next_room_idx))
 			var layout_type := room_layouts[next_room_idx].get_room_door_type()
-			print("        layout type: " + str(layout_type))
+			if generation_output: print("        layout type: " + str(layout_type))
 			var room_rotation = 0
 			match layout_type:
 				Room_Layout.RoomDoorType.ONE:
@@ -195,16 +200,16 @@ func generate_dungeon_layer(num_rooms: int) -> bool:
 					room_rotation %= 4
 				Room_Layout.RoomDoorType.ALL:
 					room_rotation = 0
-			print("        rotation: " + str(room_rotation))
+			if generation_output: print("        rotation: " + str(room_rotation))
 			if spawn_room_at_grid(next_dir, next_room_idx, room_rotation):
-				print("        O room spawn success")
+				if generation_output: print("        O room spawn success")
 				queue.push_back(next_dir)
 				room_counter += 1
 		if room_counter >= num_rooms:
-			print("X max rooms reached")
+			if generation_output: print("X max rooms reached")
 			break
 	place_doors_where_connected()
-	print("Spawned " + str(room_counter) + " Rooms")
+	if generation_output: print("Spawned " + str(room_counter) + " Rooms")
 	return room_counter > 0.5 * num_rooms
 
 func grid_to_world_pos(grid_coords: Vector2i) -> Vector2:

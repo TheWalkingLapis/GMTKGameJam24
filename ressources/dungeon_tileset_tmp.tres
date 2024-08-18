@@ -1,13 +1,16 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://du68btn4mywoy"]
 
-[ext_resource type="Texture2D" uid="uid://fv6mjkmihisi" path="res://assets/textures/dungeon_tilemap_temp.png" id="1_b3nyf"]
+[ext_resource type="Texture2D" uid="uid://cufsako6gyq0f" path="res://assets/textures/dungeon_tilemap_temp.png" id="1_b3nyf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vr623"]
 texture = ExtResource("1_b3nyf")
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, -8, 8, -8, 8, 8)
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
 
 [resource]
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_vr623")
