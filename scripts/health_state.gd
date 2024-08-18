@@ -1,4 +1,5 @@
 extends Node
+class_name HealthModule
 
 signal is_damaged
 signal lethal_damage_taken

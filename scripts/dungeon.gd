@@ -37,8 +37,8 @@ class Room:
 
 @export_category("Debug")
 @export var generation_output: bool = false
-@export_category("Settings")
 
+@export_category("Settings")
 @export var max_dungeon_size: Vector2i = Vector2(10, 10)
 
 var room_layouts: Array[Room_Layout]
@@ -244,7 +244,6 @@ func place_doors_where_connected():
 	for y in range(max_dungeon_size.y):
 		for x in range(max_dungeon_size.x):
 			if dungeon_occupation_grid[y][x]:
-				print(str(Vector2i(x,y)))
 				if not y == max_dungeon_size.y - 1:
 					if dungeon_occupation_grid[y+1][x]:
 						dungeon_tile_map.set_cell(tiles_per_room_unit * Vector2i(x,y) + get_local_door_coords(2), 0, Vector2i(3,0))
