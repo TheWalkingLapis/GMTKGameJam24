@@ -343,13 +343,17 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 			var right = rotate_tile_map.get_cell_atlas_coords(Vector2i(x+1,y)).x
 			var bot = rotate_tile_map.get_cell_atlas_coords(Vector2i(x,y+1)).x
 			var left = rotate_tile_map.get_cell_atlas_coords(Vector2i(x-1,y)).x
-			var atlas_coords = mapping_room_description_to_tile(middle, top, left, right, bot)
+			var top_left = rotate_tile_map.get_cell_atlas_coords(Vector2i(x-1,y-1)).x
+			var top_right = rotate_tile_map.get_cell_atlas_coords(Vector2i(x+1,y-1)).x
+			var bottom_left = rotate_tile_map.get_cell_atlas_coords(Vector2i(x-1,y+1)).x
+			var bottom_right = rotate_tile_map.get_cell_atlas_coords(Vector2i(x+1,y+1)).x
+			var atlas_coords = mapping_room_description_to_tile(middle, top, left, right, bot, top_left, top_right, bottom_left, bottom_right)
 			if atlas_coords != Vector2i(-1,-1):
 				dungeon_tile_map.set_cell(location + Vector2i(x,y), 0, atlas_coords)
 	paste_tile_map.clear()
 	rotate_tile_map.clear()
 
-func mapping_room_description_to_tile(middle, top, left, right, bottom) -> Vector2i:
+func mapping_room_description_to_tile(middle, top, left, right, bottom, top_left, top_right, bottom_left, bottom_right) -> Vector2i:
 	const nothing = -1
 	const floor = 0
 	const wall = 1
@@ -360,7 +364,7 @@ func mapping_room_description_to_tile(middle, top, left, right, bottom) -> Vecto
 			if bottom == floor:
 				# normal wall
 				return Vector2i(1, 0)
-			else:
+			elif top == floor:
 				# backwards normal wall
 				return Vector2i(1, 2)
 		if top == wall and bottom == wall:
@@ -384,16 +388,16 @@ func mapping_room_description_to_tile(middle, top, left, right, bottom) -> Vecto
 			return Vector2i(4, 1)
 
 		# inward corners
-		if left == wall and bottom == wall:
+		if left == wall and bottom == wall and bottom_left == floor:
 			# top right
 			return Vector2i(2, 0)
-		if right == wall and bottom == wall:
+		if right == wall and bottom == wall and bottom_right == floor:
 			# top left
 			return Vector2i(0, 0)
-		if right == wall and top == wall:
+		if right == wall and top == wall and top_right == floor:
 			# bottom left
 			return Vector2i(0, 2)
-		if left == wall and top == wall:
+		if left == wall and top == wall and top_left == floor:
 			# top right
 			return Vector2i(2, 2)
 
