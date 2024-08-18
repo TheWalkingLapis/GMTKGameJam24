@@ -20,6 +20,7 @@ func _process(delta):
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 
+
 	if Input.is_action_just_pressed("cast_spell"):
 		$CombatModule.cast_spell(Spell.SpellName.FIREBALL, position, velocity if velocity.normalized() != Vector2.ZERO else Vector2(1,0))
 	
