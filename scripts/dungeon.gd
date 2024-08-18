@@ -31,7 +31,7 @@ func _ready():
 			dungeon_occupation_grid[y].append(false)
 	
 	# fetch room layouts
-	for child in $Rooms.get_children():
+	for child in $Room_Layout.get_children():
 		if child is Room_Layout:
 			room_layouts.append(child)
 	num_room_layouts = room_layouts.size()
@@ -69,9 +69,9 @@ func get_cardinal_neighbour_count(grid_coord: Vector2i) -> int:
 
 func generate_dungeon_layer(num_rooms: int) -> bool:
 	var room_counter = 1
-	var spawn_room_candidates = get_room_layout_with_min_doors(2)
-	# TODO select random room layout as spawn room
-	spawn_room_at_grid(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2), 0)
+	var spawn_room_candidates = get_room_layout_with_min_doors(3)
+	var spawn_room_idx = randi() % spawn_room_candidates.size()
+	spawn_room_at_grid(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2), spawn_room_idx)
 	
 	var queue: Array[Vector2i]
 	queue.push_back(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
@@ -138,18 +138,18 @@ func spawn_room_at_grid(grid_coord: Vector2i, room_layout_idx: int) -> bool:
 	return true
 
 func get_room_layout_with_exact_doors(num_doors: int) -> Array[int]:
-	var rooms = []
+	var rooms: Array[int] = []
 	for idx in range(num_room_layouts):
 		var room = room_layouts[idx]
 		if room.get_num_doors() == num_doors:
-			rooms.append(room)
+			rooms.append(idx)
 	return rooms
 func get_room_layout_with_min_doors(num_doors: int) -> Array[int]:
-	var rooms = []
+	var rooms: Array[int] = []
 	for idx in range(num_room_layouts):
 		var room = room_layouts[idx]
 		if room.get_num_doors() >= num_doors:
-			rooms.append(room)
+			rooms.append(idx)
 	return rooms
 
 func generate_room_patterns():
