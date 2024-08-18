@@ -9,4 +9,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$Camera2D.position = $Player.position
+	if Input.is_action_just_released("zoom_in"):
+		$Camera2D.zoom *= 1.2
+	if Input.is_action_just_released("zoom_out"):
+		$Camera2D.zoom *= 0.8
+		
 	pass

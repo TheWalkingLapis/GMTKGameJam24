@@ -25,7 +25,11 @@ func cast_spell(spell_name: Spell.SpellName, start_pos: Vector2, dir: Vector2):
 	spell.init(dir)
 	spell.position = start_pos
 	spell.enemy_hit.connect(_on_spell_enemy_hit)
-	get_tree().current_scene.add_child(spell)
+	spell.projectile_dead.connect(_on_spell_died)
+	spell_instance_node.add_child(spell)
 
 func _on_spell_enemy_hit(obj):
 	enemy_hit.emit(obj)
+
+func _on_spell_died(spell):
+	spell.queue_free()
