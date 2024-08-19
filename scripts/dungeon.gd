@@ -1,6 +1,8 @@
 extends Node2D
 class_name Dungeon
 
+signal enemy_dead(percentage: float)
+
 class Room:
 	var layout: Room_Layout
 	var layout_id: int
@@ -37,7 +39,7 @@ class Room:
 		return room
 
 @export_category("Monster_Prefabs")
-@export var slime: PackedScene
+@export var enemies: Array[PackedScene]
 
 @export_category("Debug")
 @export var generation_output: bool = false
@@ -51,6 +53,8 @@ var room_patterns: Dictionary
 @onready var dungeon_tile_map: TileMapLayer = $"Dungeon_TileMap"
 var dungeon_occupation_grid: Array[Array] = []
 var dungeon_rooms: Dictionary
+var num_max_enemy_spawns = 0
+var num_enemy_killed = 0
 static var tiles_per_room_unit: int = 15
 
 func _ready():
@@ -73,6 +77,7 @@ func _process(delta):
 func clear_layer():
 	dungeon_tile_map.clear()
 	dungeon_rooms.clear()
+	num_enemy_killed = 0
 	for y in range(max_dungeon_size.y):
 		for x in range(max_dungeon_size.x):
 			dungeon_occupation_grid[y][x] = false
@@ -260,9 +265,10 @@ func activate_room(grid_coord: Vector2i, player_node: Player, enemy_parent_node:
 	print("activated room " + str(grid_coord))
 	var enemy_locations: Array[Vector2i] = dungeon_rooms[grid_coord].enemy_spawn_locations
 	for e in enemy_locations:
-		var enemy = slime.instantiate()
+		var enemy = enemies[randi() % enemies.size()].instantiate()
 		var start_pos = 16 * (get_tilemap_corner_from_grid_coords(grid_coord) + e)
 		enemy.init(player_node, start_pos)
+		enemy.enemy_dead.connect(enemy_died)
 		enemy_parent_node.add_child(enemy)
 
 func complete_room(grid_coord: Vector2i, completed_neighbours: Array[int]):
@@ -439,6 +445,16 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 	paste_tile_map.clear()
 	rotate_tile_map.clear()
 	return enemy_spawn_coords
+
+func calculate_monster_number():
+	num_max_enemy_spawns = 0
+	for room_key in dungeon_rooms.keys():
+		num_max_enemy_spawns += dungeon_rooms[room_key].enemy_spawn_locations.size()
+	return num_max_enemy_spawns
+
+func enemy_died():
+	num_enemy_killed += 1
+	enemy_dead.emit(clamp(num_enemy_killed * 1.0 / num_max_enemy_spawns, 0.0, 1.0))
 
 func mapping_room_description_to_tile(top_left, top, top_right, left, middle, right, bottom_left, bottom, bottom_right) -> Vector2i:
 	const nothing = -1

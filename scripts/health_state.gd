@@ -1,7 +1,7 @@
 extends Node
 class_name HealthModule
 
-signal is_damaged
+signal hp_change(current_hp)
 signal lethal_damage_taken
 
 @export var max_hp: int = 100
@@ -17,13 +17,14 @@ func _process(delta):
 
 func heal(hp: int):
 	if dead: return
+	hp_change.emit(get_hp_percentage())
 	current_hp += hp
 	current_hp = clamp(current_hp, 0, max_hp)
 
 func take_damage(dmg: int):
 	if dead: return
 	current_hp -= dmg
-	is_damaged.emit()
+	hp_change.emit(get_hp_percentage())
 	if current_hp <= 0:
 		dead = true
 		lethal_damage_taken.emit()

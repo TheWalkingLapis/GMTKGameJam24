@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @export var spell_textures: Array[Texture]
+@export var attack_bar_textures: Array[Texture]
 
 @onready var current_spell_node: TextureRect = $Current_Spell_Border/Current_Spell
 @onready var fire_notch_1_fire: TextureRect = $Notches/VBoxContainer/Fire_Notches/TextureRect/TextureRect
@@ -16,6 +17,10 @@ extends CanvasLayer
 func set_current_spell_tex(spell: Spell.SpellName):
 	if spell == Spell.SpellName.FIREBALL:
 		current_spell_node.texture = spell_textures[0]
+		attack_cd_bar.texture_progress = attack_bar_textures[0]
+	if spell == Spell.SpellName.WATERBALL:
+		current_spell_node.texture = spell_textures[1]
+		attack_cd_bar.texture_progress = attack_bar_textures[1]
 	# TODO water and basic
 
 func set_fire_charges(num_charges: int):
@@ -39,4 +44,5 @@ func set_health_bar(percentage: float):
 	health_bar.value = percentage * 100
 	
 func set_enemy_kill_progress_bar(percentage: float):
+	
 	enemy_kill_bar.value = percentage * 100

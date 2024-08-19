@@ -1,10 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ep6dk460370p"]
+[gd_scene load_steps=4 format=3 uid="uid://ep6dk460370p"]
 
 [ext_resource type="Script" path="res://scripts/combat_module.gd" id="1_ltwx7"]
 [ext_resource type="PackedScene" uid="uid://de237hrukf5f5" path="res://scenes/spells/FireBall.tscn" id="2_wjw4b"]
+[ext_resource type="PackedScene" uid="uid://cvn3lvlcc071p" path="res://scenes/spells/WaterBall.tscn" id="3_6nvyu"]
 
 [node name="CombatModule" type="Node"]
 script = ExtResource("1_ltwx7")
-spells = Array[PackedScene]([ExtResource("2_wjw4b")])
+spells = Array[PackedScene]([ExtResource("2_wjw4b"), ExtResource("3_6nvyu")])
 
 [node name="SpellInstances" type="Node" parent="."]

@@ -1,6 +1,8 @@
 extends Node2D
 
 var dungeon_rooms: Dictionary
+@onready var player: Player = $Player
+@onready var dungeon: Dungeon = $Dungeon
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,6 +12,7 @@ func load_next_dungeon_layer():
 	$Dungeon.clear_layer()
 	dungeon_rooms.clear()
 	while(not $Dungeon.generate_dungeon_layer(30)): $Dungeon.clear_layer()
+	$Dungeon.calculate_monster_number()
 	var room_coords: Array[Vector2i] = $Dungeon.get_used_room_coords()
 	for coord in room_coords:
 		dungeon_rooms[coord] = 0

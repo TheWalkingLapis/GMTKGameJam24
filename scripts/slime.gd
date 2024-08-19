@@ -11,6 +11,7 @@ func _ready():
 func init(player_: Player, start_pos: Vector2):
 	position = start_pos
 	player = player_
+	$AnimatedSprite2D.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

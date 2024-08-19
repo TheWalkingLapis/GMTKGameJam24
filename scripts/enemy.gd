@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Enemy
 
-signal enemy_dead(value: int)
+signal enemy_dead
 
 @export var movement_speed: float = 10.0
 @export var value: int = 0 # for progression at altar
@@ -18,5 +18,5 @@ func _process(delta):
 	pass
 
 func die():
-	enemy_dead.emit(value)
+	enemy_dead.emit()
 	queue_free()
