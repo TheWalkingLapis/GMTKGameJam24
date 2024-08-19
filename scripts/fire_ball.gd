@@ -6,7 +6,7 @@ func init(shot_by_player_: bool, dir: Vector2):
 	shot_by_player = shot_by_player_
 	cast_direction = dir.normalized()
 	look_at(dir.normalized())
-	$AnimatedSprite2D.play("cast", 2.0)
+	$AnimatedSprite2D.play("cast", flight_speed / 50.0)
 	set_collision_layer_value(4, not shot_by_player)
 	set_collision_layer_value(5, shot_by_player)
 	set_collision_mask_value(2, not shot_by_player)

@@ -197,7 +197,7 @@ func generate_dungeon_layer(num_rooms: int) -> bool:
 					room_rotation += randi_range(1, 3)
 					room_rotation %= 4
 				Room_Layout.RoomDoorType.ALL:
-					room_rotation = 0
+					room_rotation = randi() % 4
 			if generation_output: print("        rotation: " + str(room_rotation))
 			if spawn_room_at_grid(next_dir, next_room_idx, room_rotation):
 				if generation_output: print("        O room spawn success")

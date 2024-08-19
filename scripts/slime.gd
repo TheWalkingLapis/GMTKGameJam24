@@ -14,8 +14,23 @@ func init(player_: Player, start_pos: Vector2):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	melee_damage_cd_tracker += delta
 	if not player:
 		return
-	var dir = (player.position - position).normalized()
+	var vec = player.global_position - global_position
+	if vec.length() > 16 * 10:
+		return
+	var dir = vec.normalized()
 	velocity = dir * delta * movement_speed
+	if velocity.x > 0:
+		$AnimatedSprite2D.flip_h = true # flip horizontally
+	elif velocity.x < 0:
+		$AnimatedSprite2D.flip_h = false
 	move_and_slide()
+	var collision = get_last_slide_collision()
+	if collision:
+		var collider := collision.get_collider() 
+		if collider is Player and melee_damage_cd_tracker > melee_damage_cooldown:
+			melee_damage_cd_tracker = 0.0
+			player.health_module.take_damage(melee_damage)
+			print("HIT")

@@ -1,23 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://bolcvht4ad50f"]
+[gd_scene load_steps=8 format=3 uid="uid://bolcvht4ad50f"]
 
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_dtoc8"]
 [ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="1_mmf4c"]
-[ext_resource type="Texture2D" uid="uid://b4ptji3v02a2t" path="res://icon.svg" id="1_tug3j"]
+[ext_resource type="Texture2D" uid="uid://cufqgb5xea374" path="res://assets/textures/sprites_enemies.png" id="3_t3v13"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tnadm"]
-radius = 8.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_yhf4s"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sew28"]
+atlas = ExtResource("3_t3v13")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xr67t"]
+atlas = ExtResource("3_t3v13")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6bisp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sew28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xr67t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Slime" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 11
+motion_mode = 1
 script = ExtResource("1_dtoc8")
+movement_speed = 2000.0
 value = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_tnadm")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("1_tug3j")
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yhf4s")
 
 [node name="HealthState" parent="." instance=ExtResource("1_mmf4c")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.8125, 0.8125)
+sprite_frames = SubResource("SpriteFrames_6bisp")
+frame_progress = 0.845059
+speed_scale = 0.4
