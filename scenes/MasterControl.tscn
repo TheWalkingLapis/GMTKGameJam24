@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cp5owfr1krmgh"]
+
+[ext_resource type="PackedScene" uid="uid://uaqhtbpw28c0" path="res://scenes/GameController.tscn" id="1_ccbyy"]
+[ext_resource type="PackedScene" uid="uid://4q773oh3phsi" path="res://scenes/UI/Ingame_Overlay.tscn" id="2_fm0a8"]
+
+[node name="MasterControl" type="Node2D"]
+
+[node name="GameController" parent="." instance=ExtResource("1_ccbyy")]
+
+[node name="IngameOverlay" parent="." instance=ExtResource("2_fm0a8")]
