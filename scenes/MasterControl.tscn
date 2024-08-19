@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cp5owfr1krmgh"]
+[gd_scene load_steps=4 format=3 uid="uid://cp5owfr1krmgh"]
 
 [ext_resource type="PackedScene" uid="uid://uaqhtbpw28c0" path="res://scenes/GameController.tscn" id="1_ccbyy"]
+[ext_resource type="Script" path="res://scripts/master_control.gd" id="1_s4qf5"]
 [ext_resource type="PackedScene" uid="uid://4q773oh3phsi" path="res://scenes/UI/Ingame_Overlay.tscn" id="2_fm0a8"]
 
 [node name="MasterControl" type="Node2D"]
+script = ExtResource("1_s4qf5")
 
 [node name="GameController" parent="." instance=ExtResource("1_ccbyy")]
 

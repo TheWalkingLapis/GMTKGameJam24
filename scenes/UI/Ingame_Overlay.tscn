@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://4q773oh3phsi"]
+[gd_scene load_steps=10 format=3 uid="uid://4q773oh3phsi"]
 
 [ext_resource type="Texture2D" uid="uid://dkj1sqj8s48lf" path="res://assets/textures/UI_Border.png" id="1_1l26e"]
 [ext_resource type="Script" path="res://scripts/ingame_overlay.gd" id="1_aut26"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dhbu1pl2liof7" path="res://assets/textures/spell_notch.png" id="3_qpebp"]
 [ext_resource type="Texture2D" uid="uid://d0grn6aedjk2s" path="res://assets/textures/Attack_Cooldown_Under.png" id="4_rrq8h"]
 [ext_resource type="Texture2D" uid="uid://dsyejwpnrxfhp" path="res://assets/textures/Attack_Cooldown_Fire.png" id="5_6jj0a"]
+[ext_resource type="Texture2D" uid="uid://bu3phtcun7oir" path="res://assets/textures/spell_notch_fire.png" id="5_7xrop"]
+[ext_resource type="Texture2D" uid="uid://clplkbwcaygsg" path="res://assets/textures/spell_notch_water.png" id="6_mj1at"]
+[ext_resource type="Texture2D" uid="uid://ewue5jrlyc5q" path="res://assets/textures/Health_Progress.png" id="9_44eyu"]
 
 [node name="IngameOverlay" type="CanvasLayer"]
 script = ExtResource("1_aut26")
@@ -52,13 +55,22 @@ alignment = 1
 layout_mode = 2
 texture = ExtResource("3_qpebp")
 
+[node name="TextureRect" type="TextureRect" parent="Notches/VBoxContainer/Fire_Notches/TextureRect"]
+texture = ExtResource("5_7xrop")
+
 [node name="TextureRect2" type="TextureRect" parent="Notches/VBoxContainer/Fire_Notches"]
 layout_mode = 2
 texture = ExtResource("3_qpebp")
 
+[node name="TextureRect" type="TextureRect" parent="Notches/VBoxContainer/Fire_Notches/TextureRect2"]
+texture = ExtResource("5_7xrop")
+
 [node name="TextureRect3" type="TextureRect" parent="Notches/VBoxContainer/Fire_Notches"]
 layout_mode = 2
 texture = ExtResource("3_qpebp")
+
+[node name="TextureRect" type="TextureRect" parent="Notches/VBoxContainer/Fire_Notches/TextureRect3"]
+texture = ExtResource("5_7xrop")
 
 [node name="Water_notches" type="HBoxContainer" parent="Notches/VBoxContainer"]
 layout_mode = 2
@@ -68,20 +80,28 @@ alignment = 1
 layout_mode = 2
 texture = ExtResource("3_qpebp")
 
+[node name="TextureRect" type="TextureRect" parent="Notches/VBoxContainer/Water_notches/TextureRect"]
+texture = ExtResource("6_mj1at")
+
 [node name="TextureRect2" type="TextureRect" parent="Notches/VBoxContainer/Water_notches"]
 layout_mode = 2
 texture = ExtResource("3_qpebp")
+
+[node name="TextureRect" type="TextureRect" parent="Notches/VBoxContainer/Water_notches/TextureRect2"]
+texture = ExtResource("6_mj1at")
 
 [node name="TextureRect3" type="TextureRect" parent="Notches/VBoxContainer/Water_notches"]
 layout_mode = 2
 texture = ExtResource("3_qpebp")
 
-[node name="Basic_Attack_Cooldown" type="TextureProgressBar" parent="."]
+[node name="TextureRect" type="TextureRect" parent="Notches/VBoxContainer/Water_notches/TextureRect3"]
+texture = ExtResource("6_mj1at")
+
+[node name="Attack_Cooldown_Bar" type="TextureProgressBar" parent="."]
 offset_left = 10.0
 offset_top = 264.0
 offset_right = 147.0
 offset_bottom = 286.0
-value = 50.0
 nine_patch_stretch = true
 texture_under = ExtResource("4_rrq8h")
 texture_progress = ExtResource("5_6jj0a")
@@ -93,13 +113,13 @@ offset_right = 646.0
 offset_bottom = 39.0
 nine_patch_stretch = true
 texture_under = ExtResource("4_rrq8h")
-texture_progress = ExtResource("5_6jj0a")
+texture_progress = ExtResource("9_44eyu")
 
 [node name="Enemies_Kill_Progress_Bar" type="TextureProgressBar" parent="."]
-offset_left = 185.0
-offset_top = 70.0
-offset_right = 652.0
-offset_bottom = 92.0
+offset_left = 178.0
+offset_top = 56.0
+offset_right = 645.0
+offset_bottom = 78.0
 nine_patch_stretch = true
 texture_under = ExtResource("4_rrq8h")
 texture_progress = ExtResource("5_6jj0a")
