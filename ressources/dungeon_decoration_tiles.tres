@@ -1,0 +1,45 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://c72n0a080ao83"]
+
+[ext_resource type="Texture2D" uid="uid://jikwu2khk468" path="res://assets/textures/sprites_entities.png" id="1_gu18a"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jcr28"]
+texture = ExtResource("1_gu18a")
+0:1/animation_columns = 2
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/animation_columns = 2
+0:3/animation_frame_0/duration = 1.0
+0:3/animation_frame_1/duration = 1.0
+0:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+0:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+0:0/animation_columns = 6
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+2:3/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_jcr28")

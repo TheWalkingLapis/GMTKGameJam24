@@ -51,11 +51,21 @@ var room_layouts: Array[Room_Layout]
 var num_room_layouts: int
 var room_patterns: Dictionary
 @onready var dungeon_tile_map: TileMapLayer = $"Dungeon_TileMap"
+@onready var decoration_tile_map: TileMapLayer = $"Decoration_TileMap"
 var dungeon_occupation_grid: Array[Array] = []
 var dungeon_rooms: Dictionary
 var num_max_enemy_spawns = 0
 var num_enemy_killed = 0
 static var tiles_per_room_unit: int = 15
+
+# none, torch, hole_1, hole_2, water
+const deco_wall_tiles: Array[Vector2i] = [Vector2i(-1,-1), Vector2i(0,0), Vector2i(0,2), Vector2i(1,2), Vector2i(2,2)]
+const deco_wall_probs: Array[int] = [48, 10, 2, 1, 3]
+const deco_wall_sum: int = 64
+# none, camp_fire, puddle_1, puddle_2, bone_1, bone_2
+const deco_floor_tiles: Array[Vector2i] = [Vector2i(-1,-1), Vector2i(0,1), Vector2i(0,3), Vector2i(2,3), Vector2i(5,4), Vector2i(6,4)]
+const deco_floor_probs: Array[int] = [300, 5, 3, 2, 2, 1]
+const deco_floor_sum: int = 313
 
 func _ready():
 	# init occupation grid
@@ -75,6 +85,7 @@ func _process(delta):
 	pass
 
 func clear_layer():
+	decoration_tile_map.clear()
 	dungeon_tile_map.clear()
 	dungeon_rooms.clear()
 	num_enemy_killed = 0
@@ -442,6 +453,31 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 			var atlas_coords = mapping_room_description_to_tile(cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6], cells[7], cells[8])
 			if atlas_coords != Vector2i(-1,-1):
 				dungeon_tile_map.set_cell(location + Vector2i(x,y), 0, atlas_coords)
+				if atlas_coords.y == 0 and not (x == 0 or y == 0 or y == max_dungeon_size.y - 1 or x == max_dungeon_size.x - 1):
+					if atlas_coords.x == 1: # back wall
+						var ran = randi() % deco_wall_sum
+						var deco_tile_idx = Vector2i(-1,-1)
+						var sum = 0
+						for i in range(deco_wall_probs.size()):
+							sum += deco_wall_probs[i]
+							if sum > ran:
+								deco_tile_idx = deco_wall_tiles[i]
+								break
+						if deco_tile_idx != Vector2i(-1,-1):
+							decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
+						decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
+					elif atlas_coords.x >= 6 and atlas_coords.x <= 11: # floor
+						var ran = randi() % deco_floor_sum
+						var deco_tile_idx = Vector2i(-1,-1)
+						var sum = 0
+						for i in range(deco_floor_probs.size()):
+							sum += deco_floor_probs[i]
+							if sum > ran:
+								deco_tile_idx = deco_floor_tiles[i]
+								break
+						if deco_tile_idx != Vector2i(-1,-1):
+							decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
+						
 	paste_tile_map.clear()
 	rotate_tile_map.clear()
 	return enemy_spawn_coords
