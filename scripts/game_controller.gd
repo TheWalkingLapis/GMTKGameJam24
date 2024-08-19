@@ -9,6 +9,10 @@ func _ready():
 	dungeon.set_player(player)
 	load_next_dungeon_layer()
 	dungeon.enemy_dead.connect(player.set_scaling)
+	dungeon.trigger_next_floor.connect(handle_floor_done)
+
+func handle_floor_done():
+	load_next_dungeon_layer()
 
 func load_next_dungeon_layer():
 	$Dungeon.clear_layer()

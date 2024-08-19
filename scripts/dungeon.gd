@@ -2,6 +2,7 @@ extends Node2D
 class_name Dungeon
 
 signal enemy_dead(percentage: float)
+signal trigger_next_floor
 
 class Room:
 	var layout: Room_Layout
@@ -60,6 +61,7 @@ var num_max_enemy_spawns = 0
 var num_enemy_killed = 0
 static var tiles_per_room_unit: int = 15
 var player: Player
+var ready_for_next_floor: bool = false
 
 const interactable_deco_tiles: Array[Vector2i] = [Vector2i(0,0), Vector2i(2,2), Vector2i(0,1), Vector2i(0,3), Vector2i(2,3)]
 # none, torch, hole_1, hole_2, water
@@ -347,6 +349,20 @@ func spawn_start_room(grid_coord: Vector2i):
 			var atlas_coords = mapping_room_description_to_tile(cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6], cells[7], cells[8])
 			if atlas_coords != Vector2i(-1,-1):
 				dungeon_tile_map.set_cell(location + Vector2i(x,y), 0, atlas_coords)
+	decoration_tile_map.set_cell(location + Vector2i(5, 6), 0, Vector2i(0,7))
+	var deco_entity = interactable.instantiate()
+	deco_entity.init(location + Vector2i(5, 6), Vector2i(0,7))
+	deco_entity.position = location * 16.0 + Vector2(5, 6) * 16.0 + Vector2(8.0, 8.0)
+	deco_entity.interactable_replace.connect(replace_deco_tile)
+	deco_entity.hole_interaction.connect(handle_hole_interaction)
+	interactable_node.add_child(deco_entity)
+	decoration_tile_map.set_cell(location + Vector2i(10, 6), 0, Vector2i(0,6))
+	deco_entity = interactable.instantiate()
+	deco_entity.init(location + Vector2i(10, 6), Vector2i(0,6))
+	deco_entity.position = location * 16.0 + Vector2(10, 6) * 16.0 + Vector2(8.0, 8.0)
+	deco_entity.interactable_replace.connect(replace_deco_tile)
+	deco_entity.hole_interaction.connect(handle_hole_interaction)
+	interactable_node.add_child(deco_entity)
 	
 	dungeon_occupation_grid[grid_coord.y][grid_coord.x] = true
 	var enemy_locations: Array[Vector2i] = []
@@ -478,6 +494,7 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 								deco_entity.init(location + Vector2i(x,y), deco_tile_idx)
 								deco_entity.position = location * 16.0 + Vector2(x,y) * 16.0 + Vector2(8.0, 8.0)
 								deco_entity.interactable_replace.connect(replace_deco_tile)
+								deco_entity.hole_interaction.connect(handle_hole_interaction)
 								interactable_node.add_child(deco_entity)
 						decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
 					elif atlas_coords.x >= 6 and atlas_coords.x <= 11: # floor
@@ -496,6 +513,7 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 								deco_entity.init(location + Vector2i(x,y), deco_tile_idx)
 								deco_entity.global_position = location * 16.0 + Vector2(x,y) * 16.0 + Vector2(8.0, 8.0)
 								deco_entity.interactable_replace.connect(replace_deco_tile)
+								deco_entity.hole_interaction.connect(handle_hole_interaction)
 								interactable_node.add_child(deco_entity)
 						
 	paste_tile_map.clear()
@@ -572,5 +590,12 @@ func generate_room_patterns():
 		var room = room_layouts[id]
 		room_patterns[room] = room.get_room_pattern()
 
+func handle_hole_interaction():
+	if ready_for_next_floor:
+		trigger_next_floor.emit()
+
 func replace_deco_tile(grid_pos, atlas_idx):
 	decoration_tile_map.set_cell(grid_pos, 0, atlas_idx)
+	# Altar
+	if atlas_idx == Vector2i(1,6):
+		ready_for_next_floor = true

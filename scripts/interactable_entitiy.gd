@@ -2,6 +2,7 @@ extends Area2D
 class_name Interactable_Entity
 
 signal interactable_replace(grid_idx: Vector2i, atlas_idx: Vector2i)
+signal hole_interaction
 
 var tile_pos: Vector2i = Vector2i(0,0)
 var atlas_idx: Vector2i = Vector2i(-1,-1)
@@ -20,6 +21,12 @@ func init(pos, tile_idx):
 	tile_pos = pos
 	if tile_idx == Vector2i(0,1):
 		atlas_idx = Vector2i(3,8) if randi() % 2 == 0 else Vector2i(2,8)
+	elif tile_idx == Vector2i(0,6):
+		atlas_idx = Vector2i(1,6)
+		needs_input = true
+	elif tile_idx == Vector2i(0,7):
+		atlas_idx = Vector2i(0,7)
+		needs_input = true
 	else:
 		atlas_idx = Vector2i(-1,-1)
 	is_fire = tile_idx in [Vector2i(0,0), Vector2i(0,1)]
@@ -29,8 +36,13 @@ func init(pos, tile_idx):
 func _process(delta):
 	if not needs_input: return
 	if player_inside and Input.is_action_just_pressed("interact"):
-		if tile_pos == Vector2i(0,0):
-			pass
+		print("test_inside")
+		# altar
+		if atlas_idx == Vector2i(1,6):
+			interactable_replace.emit(tile_pos, atlas_idx)
+		# hole
+		if atlas_idx == Vector2i(0,7):
+			hole_interaction.emit()
 
 func _on_body_entered(body):
 	if body is Player:
