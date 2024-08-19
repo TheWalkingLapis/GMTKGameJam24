@@ -4,7 +4,7 @@ class_name Spell
 signal hit(obj: Object)
 signal projectile_dead(spell: Spell)
 
-enum SpellName {FIREBALL, WATERBALL}
+enum SpellName {FIREBALL, WATERBALL, BASIC_PLAYER_BALL}
 
 @export var base_damage: int = 0
 @export var flight_speed: float = 10.0
