@@ -38,4 +38,3 @@ func _process(delta):
 		if collider is Player and melee_damage_cd_tracker > melee_damage_cooldown:
 			melee_damage_cd_tracker = 0.0
 			player.health_module.take_damage(melee_damage)
-			print("HIT")

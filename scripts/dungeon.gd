@@ -62,6 +62,7 @@ var num_enemy_killed = 0
 static var tiles_per_room_unit: int = 15
 var player: Player
 var ready_for_next_floor: bool = false
+var spawn_room_coord: Vector2i
 
 const interactable_deco_tiles: Array[Vector2i] = [Vector2i(0,0), Vector2i(2,2), Vector2i(0,1), Vector2i(0,3), Vector2i(2,3)]
 # none, torch, hole_1, hole_2, water
@@ -126,10 +127,11 @@ func get_cardinal_neighbour_count(grid_coord: Vector2i) -> int:
 
 func generate_dungeon_layer(num_rooms: int) -> bool:
 	var room_counter = 1
-	spawn_start_room(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
+	spawn_room_coord = Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2)
+	spawn_start_room(spawn_room_coord)
 	
 	var queue: Array[Vector2i]
-	queue.push_back(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
+	queue.push_back(spawn_room_coord)
 	while(not queue.is_empty()):
 		var coord = queue.pop_front()
 		if generation_output:

@@ -1,30 +1,18 @@
 ## BLOB MAN (Name to be changed)
 
-### Genre
-Rogue-Like Dungeon Crawler
+TODO
 
-### Hauptcharakter: 
-(schwarzer) Blob/Homunculus, will irgendwo hin (raus aus dem Dungeon)
-Blob kann Größe ändern (2-3 Zustände)
+- Fix Win/Loose Screen Text
+- Continue after loose/win (button to title Screen)
+- Sound (all) (maybe look at acerola project for soundmanager structure)
+- settings (sound and fullscreen)
+- tweek spell and enemy damage
+- communicate goal of the game
+- set up itch page
+- remove left over debug messages
 
-### Story: 
-Iwas mit Alchemie
+Maybe
 
-### Kampf: 
-- Elementbasierte Magie, Spells werden größer mit Aufladezeit
-- Elemente muss man aufheben
-
-### Welt
-- Dungeon, mit ? Ebenen
-- ? versch. Gegner (slime, Alchemisten, hirschkäfer)
-
-
-## TODO
-
-- Sprites (v.a. Spieler, Dungeon) 16x16
-- Dungeon Generation
-
-
-#### later:
-- Kampfsystem ausarbeiten
-- Spawning behaviour
+- add current layer as info to UI
+- hp and progress bar texture revamp
+- more rooms

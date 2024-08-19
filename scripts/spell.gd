@@ -21,9 +21,7 @@ func die():
 func handle_collision(collision: KinematicCollision2D):
 	var collider = collision.get_collider()
 	hit.emit(collider)
-	if collider is TileMapLayer:
-		print("hit wall")
-	else:
+	if collider is not TileMapLayer:
 		if shot_by_player:
 			if collider is Enemy:
 				collider.health_module.take_damage(base_damage)

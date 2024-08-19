@@ -28,10 +28,14 @@ var water_ball_charges: int = 3 :
 		water_ball_charges = value
 		waterball_charges.emit(value)
 
-func _ready():
-	# callen when node enters the scene-tree
-	pass
-	
+func reset():
+	set_scaling(1.0)
+	fire_ball_charges = 3
+	water_ball_charges = 3
+	selected_spell = Spell.SpellName.FIREBALL
+	health_module.dead = false
+	health_module.heal(health_module.get_max_hp())
+
 func _process(delta):
 	velocity = Vector2.ZERO;
 	if Input.is_action_pressed("move_up"):
@@ -49,25 +53,25 @@ func _process(delta):
 	var cd = $CombatModule.get_cooldown_percentage()
 	attack_cooldown_percentage.emit(cd)
 	if cd >= 1.0:
-		if Input.is_action_just_pressed("attack_up"):
+		if Input.is_action_pressed("attack_up"):
 			if selected_spell == Spell.SpellName.WATERBALL:
 				water_ball_charges -= 1
 			elif selected_spell == Spell.SpellName.FIREBALL:
 				fire_ball_charges -= 1
 			$CombatModule.cast_spell(selected_spell, position + Vector2(0,-1), Vector2(0,-1))
-		if Input.is_action_just_pressed("attack_right"):
+		if Input.is_action_pressed("attack_right"):
 			if selected_spell == Spell.SpellName.WATERBALL:
 				water_ball_charges -= 1
 			elif selected_spell == Spell.SpellName.FIREBALL:
 				fire_ball_charges -= 1
 			$CombatModule.cast_spell(selected_spell, position + Vector2(1,0), Vector2(1,0))
-		if Input.is_action_just_pressed("attack_down"):
+		if Input.is_action_pressed("attack_down"):
 			if selected_spell == Spell.SpellName.WATERBALL:
 				water_ball_charges -= 1
 			elif selected_spell == Spell.SpellName.FIREBALL:
 				fire_ball_charges -= 1
 			$CombatModule.cast_spell(selected_spell, position + Vector2(0,1), Vector2(0,1))
-		if Input.is_action_just_pressed("attack_left"):
+		if Input.is_action_pressed("attack_left"):
 			if selected_spell == Spell.SpellName.WATERBALL:
 				water_ball_charges -= 1
 			elif selected_spell == Spell.SpellName.FIREBALL:

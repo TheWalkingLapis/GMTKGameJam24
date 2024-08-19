@@ -1,11 +1,13 @@
 extends Node2D
 
 signal win
+signal room_change(rooms: Array[int])
 
 var dungeon_rooms: Dictionary
 @onready var player: Player = $Player
 @onready var dungeon: Dungeon = $Dungeon
 var dungeon_layer = 0
+var last_dungeon_pos = Vector2i(-1,-1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,6 +16,12 @@ func _ready():
 	dungeon.enemy_dead.connect(player.set_scaling)
 	dungeon.trigger_next_floor.connect(handle_floor_done)
 
+func reset():
+	dungeon_layer = 0
+	last_dungeon_pos = Vector2i(-1,-1)
+	player.reset()
+	load_next_dungeon_layer()
+	
 func handle_floor_done():
 	dungeon_layer += 1
 	if dungeon_layer >= 3:
@@ -40,9 +48,6 @@ func load_next_dungeon_layer():
 		e_node.queue_free()
 
 func _process(delta):
-	if Input.is_action_just_pressed("new_dungeon"):
-		load_next_dungeon_layer()
-		return
 	if Input.is_action_just_released("zoom_in"):
 		$Camera2D.zoom *= 1.2
 		print($Camera2D.zoom)
@@ -60,6 +65,18 @@ func _process(delta):
 			$Enemies.add_child(enemy_node)
 			$Dungeon.activate_room(player_dungeon_pos, $Player, enemy_node)
 			dungeon_rooms[player_dungeon_pos] = 1
+		if player_dungeon_pos != last_dungeon_pos:
+			last_dungeon_pos = player_dungeon_pos
+			var rooms: Array[int] = [get_room_state(player_dungeon_pos + Vector2i(-1,-1)), 
+									get_room_state(player_dungeon_pos + Vector2i(0,-1)), 
+									get_room_state(player_dungeon_pos + Vector2i(1,-1)),
+									get_room_state(player_dungeon_pos + Vector2i(-1,0)), 
+									get_room_state(player_dungeon_pos), 
+									get_room_state(player_dungeon_pos + Vector2i(1,0)),
+									get_room_state(player_dungeon_pos + Vector2i(-1,1)), 
+									get_room_state(player_dungeon_pos + Vector2i(0,1)), 
+									get_room_state(player_dungeon_pos + Vector2i(1,1))]
+			room_change.emit(rooms)
 	$Camera2D.position = player_world_pos
 	
 	for e_node in $Enemies.get_children():
@@ -77,3 +94,27 @@ func _process(delta):
 					if dungeon_rooms[room_pos + Vector2i(-1,0)] == 1: completed_neighbours.append(3)
 				$Dungeon.complete_room(room_pos, completed_neighbours)
 				e_node.queue_free()
+				
+				var rooms: Array[int] = [get_room_state(player_dungeon_pos + Vector2i(-1,-1)), 
+									get_room_state(player_dungeon_pos + Vector2i(0,-1)), 
+									get_room_state(player_dungeon_pos + Vector2i(1,-1)),
+									get_room_state(player_dungeon_pos + Vector2i(-1,0)), 
+									get_room_state(player_dungeon_pos), 
+									get_room_state(player_dungeon_pos + Vector2i(1,0)),
+									get_room_state(player_dungeon_pos + Vector2i(-1,1)), 
+									get_room_state(player_dungeon_pos + Vector2i(0,1)), 
+									get_room_state(player_dungeon_pos + Vector2i(1,1))]
+				room_change.emit(rooms)
+
+func get_room_state(dungeon_coord: Vector2i) -> int:
+	if dungeon_coord == dungeon.spawn_room_coord:
+		return 4
+	if dungeon_rooms.has(dungeon_coord):
+		if dungeon_rooms[dungeon_coord] == 0:
+			return 1
+		for e_n in $Enemies.get_children():
+			if e_n.name == ("en_" + str(dungeon_coord.x) + "_" + str(dungeon_coord.y)):
+				if e_n.get_child_count() == 0: return 3
+				return 2
+		return 3
+	return 0

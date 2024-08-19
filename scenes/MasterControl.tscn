@@ -1,13 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://cp5owfr1krmgh"]
+[gd_scene load_steps=26 format=3 uid="uid://cp5owfr1krmgh"]
 
 [ext_resource type="PackedScene" uid="uid://uaqhtbpw28c0" path="res://scenes/GameController.tscn" id="1_ccbyy"]
 [ext_resource type="Script" path="res://scripts/master_control.gd" id="1_s4qf5"]
 [ext_resource type="PackedScene" uid="uid://4q773oh3phsi" path="res://scenes/UI/Ingame_Overlay.tscn" id="2_fm0a8"]
+[ext_resource type="Texture2D" uid="uid://bfr7r38tiuj08" path="res://assets/textures/corner_blur.png" id="2_vfhv7"]
 [ext_resource type="Texture2D" uid="uid://m5c5ppgoyyhi" path="res://assets/textures/EndScreen_Win.png" id="4_l0oaa"]
 [ext_resource type="Texture2D" uid="uid://b6g3l1mslgy4r" path="res://assets/textures/sprites_player.png" id="5_5but4"]
 [ext_resource type="Texture2D" uid="uid://df85cpqdxxrkr" path="res://assets/textures/EndScreen_Loose.png" id="5_emqql"]
 [ext_resource type="Texture2D" uid="uid://cufqgb5xea374" path="res://assets/textures/sprites_enemies.png" id="6_pgsm7"]
 [ext_resource type="Texture2D" uid="uid://jikwu2khk468" path="res://assets/textures/sprites_entities.png" id="7_7o5j7"]
+[ext_resource type="PackedScene" uid="uid://dt3mccu7kmtvn" path="res://scenes/UI/Title_Screen.tscn" id="10_eas2w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvsw7"]
 atlas = ExtResource("5_5but4")
@@ -132,12 +134,37 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="IngameOverlay" parent="." instance=ExtResource("2_fm0a8")]
-
 [node name="GameController" parent="." instance=ExtResource("1_ccbyy")]
+process_mode = 1
+
+[node name="Edge_Blur" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Edge_Blur"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vfhv7")
+
+[node name="IngameOverlay" parent="." instance=ExtResource("2_fm0a8")]
+layer = 2
+
+[node name="Pause_Menu" type="CanvasLayer" parent="."]
+layer = 3
+visible = false
+
+[node name="Pause_Menu" type="ColorRect" parent="Pause_Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.831373)
 
 [node name="EndScreen_Win" type="CanvasLayer" parent="."]
 process_mode = 3
+layer = 3
 visible = false
 
 [node name="TextureRect" type="TextureRect" parent="EndScreen_Win"]
@@ -169,6 +196,7 @@ frame_progress = 0.381919
 
 [node name="EndScreen_Loose" type="CanvasLayer" parent="."]
 process_mode = 3
+layer = 3
 visible = false
 
 [node name="TextureRect" type="TextureRect" parent="EndScreen_Loose"]
@@ -198,3 +226,7 @@ scale = Vector2(4, 4.25)
 sprite_frames = SubResource("SpriteFrames_275uc")
 autoplay = "default"
 frame_progress = 0.452735
+
+[node name="TitleScreen" parent="." instance=ExtResource("10_eas2w")]
+layer = 4
+visible = false

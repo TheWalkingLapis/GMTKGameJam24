@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt3mccu7kmtvn"]
+
+[ext_resource type="Texture2D" uid="uid://dhurpxkx8xoox" path="res://assets/textures/TitleScreen.png" id="1_8fhr2"]
+[ext_resource type="Script" path="res://scripts/title_screen.gd" id="1_jd6ar"]
+
+[node name="TitleScreen" type="CanvasLayer"]
+script = ExtResource("1_jd6ar")
+
+[node name="BG" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8fhr2")
+expand_mode = 1
+
+[node name="Settings_Button" type="Button" parent="."]
+visible = false
+offset_left = 30.0
+offset_top = 399.0
+offset_right = 240.0
+offset_bottom = 548.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings_Button"]
+offset_top = 40.0
+offset_right = 210.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=50]START[/font_size][/center]"
+
+[node name="Start_Button" type="Button" parent="."]
+offset_left = 472.0
+offset_top = 398.0
+offset_right = 682.0
+offset_bottom = 547.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Start_Button"]
+layout_mode = 2
+offset_top = 40.0
+offset_right = 210.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=50]START[/font_size][/center]"
+
+[node name="Settings_Button3" type="Button" parent="."]
+visible = false
+offset_left = 914.0
+offset_top = 398.0
+offset_right = 1124.0
+offset_bottom = 547.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings_Button3"]
+offset_top = 40.0
+offset_right = 210.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=50]START[/font_size][/center]"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 256.0
+offset_top = 85.0
+offset_right = 891.0
+offset_bottom = 271.0
+color = Color(0, 0, 0, 0.631373)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=40]The Blobman [on Fire] in the Miniature Dungeon[/font_size][/center]"
+
+[connection signal="pressed" from="Start_Button" to="." method="_on_start_button_pressed"]

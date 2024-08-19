@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://4q773oh3phsi"]
+[gd_scene load_steps=19 format=3 uid="uid://4q773oh3phsi"]
 
 [ext_resource type="Texture2D" uid="uid://dkj1sqj8s48lf" path="res://assets/textures/UI_Border.png" id="1_1l26e"]
 [ext_resource type="Script" path="res://scripts/ingame_overlay.gd" id="1_aut26"]
@@ -13,11 +13,17 @@
 [ext_resource type="Texture2D" uid="uid://clplkbwcaygsg" path="res://assets/textures/spell_notch_water.png" id="6_mj1at"]
 [ext_resource type="Texture2D" uid="uid://cuey31xxnlryu" path="res://assets/textures/Attack_Cooldown_Basic.png" id="7_2fxby"]
 [ext_resource type="Texture2D" uid="uid://ewue5jrlyc5q" path="res://assets/textures/Health_Progress.png" id="9_44eyu"]
+[ext_resource type="Texture2D" uid="uid://tdf0hopo3h76" path="res://assets/textures/minimap_monsters_active.png" id="10_uicia"]
+[ext_resource type="Texture2D" uid="uid://ba2f4e4pedr5x" path="res://assets/textures/minimap_spawn_room.png" id="12_hja6t"]
+[ext_resource type="Texture2D" uid="uid://by5ghool0gvo8" path="res://assets/textures/minimap_not_explored.png" id="14_e0547"]
+[ext_resource type="Texture2D" uid="uid://dlelxt0vx4457" path="res://assets/textures/minimap_cleared.png" id="15_vkcm6"]
+[ext_resource type="Texture2D" uid="uid://cd0daqwgacvhi" path="res://assets/textures/minimap_no_room.png" id="16_scwgb"]
 
 [node name="IngameOverlay" type="CanvasLayer"]
 script = ExtResource("1_aut26")
 spell_textures = Array[Texture]([ExtResource("2_p1ljr"), ExtResource("3_a0c8j"), ExtResource("4_b67fk")])
 attack_bar_textures = Array[Texture]([ExtResource("5_6jj0a"), ExtResource("5_kq1x8"), ExtResource("7_2fxby")])
+minimap_room_textures = Array[Texture]([ExtResource("16_scwgb"), ExtResource("14_e0547"), ExtResource("10_uicia"), ExtResource("15_vkcm6"), ExtResource("12_hja6t")])
 
 [node name="Current_Spell_Border" type="TextureRect" parent="."]
 offset_left = 8.0
@@ -134,3 +140,70 @@ offset_bottom = 78.0
 nine_patch_stretch = true
 texture_under = ExtResource("4_rrq8h")
 texture_progress = ExtResource("5_6jj0a")
+
+[node name="MiniMap" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 972.0
+offset_top = 12.0
+offset_right = 1108.0
+offset_bottom = 148.0
+scale = Vector2(1.19, 1.19)
+
+[node name="MiniMap_Border" type="TextureRect" parent="MiniMap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_1l26e")
+
+[node name="GridContainer" type="GridContainer" parent="MiniMap"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.9664
+offset_top = 15.9664
+offset_right = -10.0336
+offset_bottom = -9.03362
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="TL" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("14_e0547")
+
+[node name="TC" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("14_e0547")
+
+[node name="TR" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("14_e0547")
+
+[node name="CL" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("15_vkcm6")
+
+[node name="CC" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("15_vkcm6")
+
+[node name="CR" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("16_scwgb")
+
+[node name="BL" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("16_scwgb")
+
+[node name="BC" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("15_vkcm6")
+
+[node name="BR" type="TextureRect" parent="MiniMap/GridContainer"]
+layout_mode = 2
+texture = ExtResource("16_scwgb")
