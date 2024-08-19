@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6dxve1qr3q5g"]
+
+[ext_resource type="Script" path="res://scripts/enemy_baloon_big.gd" id="1_jmiks"]
+[ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="2_bpvyk"]
+[ext_resource type="Texture2D" uid="uid://bgntgd50yboi2" path="res://assets/textures/sprites_enemies.png" id="3_eo5rg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yhf4s"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2dnf"]
+atlas = ExtResource("3_eo5rg")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nx32"]
+atlas = ExtResource("3_eo5rg")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6bisp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2dnf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5nx32")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy_Baloon_Big" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 11
+motion_mode = 1
+script = ExtResource("1_jmiks")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yhf4s")
+
+[node name="HealthState" parent="." instance=ExtResource("2_bpvyk")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.8125, 0.8125)
+sprite_frames = SubResource("SpriteFrames_6bisp")
+frame_progress = 0.845059
+speed_scale = 0.4

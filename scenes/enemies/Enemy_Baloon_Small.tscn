@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://ps3x6spagx5c"]
+
+[ext_resource type="Script" path="res://scripts/enemy_baloon_small.gd" id="1_yyq57"]
+[ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="2_mb87q"]
+[ext_resource type="Texture2D" uid="uid://bgntgd50yboi2" path="res://assets/textures/sprites_enemies.png" id="3_wq5dq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yhf4s"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6b8tn"]
+atlas = ExtResource("3_wq5dq")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6kag"]
+atlas = ExtResource("3_wq5dq")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6bisp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6b8tn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6kag")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy_Baloon_Small" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 11
+motion_mode = 1
+script = ExtResource("1_yyq57")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yhf4s")
+
+[node name="HealthState" parent="." instance=ExtResource("2_mb87q")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.8125, 0.8125)
+sprite_frames = SubResource("SpriteFrames_6bisp")
+frame_progress = 0.845059
+speed_scale = 0.4
