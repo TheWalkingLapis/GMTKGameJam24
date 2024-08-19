@@ -98,6 +98,16 @@ func clear_layer():
 	dungeon_tile_map.clear()
 	dungeon_rooms.clear()
 	num_enemy_killed = 0
+	player.set_scaling(0.0)
+	player.health_module.heal(1000)
+	player.add_fire_charge()
+	player.add_fire_charge()
+	player.add_fire_charge()
+	player.add_water_charge()
+	player.add_water_charge()
+	player.add_water_charge()
+	enemy_dead.emit(0.0)
+	ready_for_next_floor = false
 	for y in range(max_dungeon_size.y):
 		for x in range(max_dungeon_size.x):
 			dungeon_occupation_grid[y][x] = false
@@ -595,7 +605,17 @@ func handle_hole_interaction():
 		trigger_next_floor.emit()
 
 func replace_deco_tile(grid_pos, atlas_idx):
-	decoration_tile_map.set_cell(grid_pos, 0, atlas_idx)
-	# Altar
 	if atlas_idx == Vector2i(1,6):
-		ready_for_next_floor = true
+		if(num_enemy_killed == num_max_enemy_spawns):
+			player.set_scaling(-0.25)
+			ready_for_next_floor = true
+			decoration_tile_map.set_cell(grid_pos, 0, atlas_idx)
+		else:
+			var deco_entity = interactable.instantiate()
+			deco_entity.init(grid_pos + Vector2i(10, 6), Vector2i(0,6))
+			deco_entity.position = grid_pos * 16.0 + Vector2(10, 6) * 16.0 + Vector2(8.0, 8.0)
+			deco_entity.interactable_replace.connect(replace_deco_tile)
+			deco_entity.hole_interaction.connect(handle_hole_interaction)
+			interactable_node.add_child(deco_entity)
+		return
+	decoration_tile_map.set_cell(grid_pos, 0, atlas_idx)

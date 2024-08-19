@@ -17,13 +17,14 @@ func _process(delta):
 
 func heal(hp: int):
 	if dead: return
-	hp_change.emit(get_hp_percentage())
 	current_hp += hp
 	current_hp = clamp(current_hp, 0, max_hp)
+	hp_change.emit(get_hp_percentage())
 
 func take_damage(dmg: int):
 	if dead: return
 	current_hp -= dmg
+	current_hp = clamp(current_hp, 0, max_hp)
 	hp_change.emit(get_hp_percentage())
 	if current_hp <= 0:
 		dead = true

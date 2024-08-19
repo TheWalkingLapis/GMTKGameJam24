@@ -36,7 +36,6 @@ func init(pos, tile_idx):
 func _process(delta):
 	if not needs_input: return
 	if player_inside and Input.is_action_just_pressed("interact"):
-		print("test_inside")
 		# altar
 		if atlas_idx == Vector2i(1,6):
 			interactable_replace.emit(tile_pos, atlas_idx)

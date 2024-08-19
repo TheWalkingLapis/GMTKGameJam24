@@ -1,8 +1,11 @@
 extends Node2D
 
+signal win
+
 var dungeon_rooms: Dictionary
 @onready var player: Player = $Player
 @onready var dungeon: Dungeon = $Dungeon
+var dungeon_layer = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,6 +15,10 @@ func _ready():
 	dungeon.trigger_next_floor.connect(handle_floor_done)
 
 func handle_floor_done():
+	dungeon_layer += 1
+	if dungeon_layer >= 3:
+		win.emit()
+		return
 	load_next_dungeon_layer()
 
 func load_next_dungeon_layer():

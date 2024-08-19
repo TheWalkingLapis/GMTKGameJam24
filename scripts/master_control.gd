@@ -22,9 +22,14 @@ func _process(delta):
 		game_controller.player.health_module.take_damage(0)
 		
 		game_controller.player.health_module.lethal_damage_taken.connect(loose)
+		game_controller.win.connect(win)
 		
 		init = false
 
 func loose():
 	$EndScreen_Loose.visible = true
+	get_tree().paused = true
+
+func win():
+	$EndScreen_Win.visible = true
 	get_tree().paused = true
