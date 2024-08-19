@@ -2,12 +2,14 @@ extends Enemy
 class_name Slime
 
 var player: Player
+@onready var health_module = $HealthState
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$HealthState.lethal_damage_taken.connect(die)
 
-func init(player_: Player):
+func init(player_: Player, start_pos: Vector2):
+	position = start_pos
 	player = player_
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

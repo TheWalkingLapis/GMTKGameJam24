@@ -188,5 +188,6 @@ sprite_frames = SubResource("SpriteFrames_jlo0q")
 animation = &"walk"
 
 [node name="CombatModule" parent="." instance=ExtResource("3_uiaik")]
+is_player = true
 
 [node name="HealthState" parent="." instance=ExtResource("4_xijir")]

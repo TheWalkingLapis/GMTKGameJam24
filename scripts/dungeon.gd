@@ -6,12 +6,13 @@ class Room:
 	var layout_id: int
 	var local_coords: Vector2i
 	var door_slots: Dictionary
-	static func create(layout_, layout_id_, coords_, room_rotation) -> Room:
+	var enemy_spawn_locations: Array[Vector2i]
+	static func create(layout_, layout_id_, coords_, room_rotation, enemy_spawn_locations_) -> Room:
 		var room:= Room.new()
 		room.layout_id = layout_id_
 		room.layout = layout_
 		room.local_coords = coords_
-		# TODO change with rotation
+		room.enemy_spawn_locations = enemy_spawn_locations_
 		match room_rotation:
 			0:
 				room.door_slots["N"] = layout_.door_directions["N"]
@@ -34,6 +35,9 @@ class Room:
 				room.door_slots["S"] = layout_.door_directions["W"]
 				room.door_slots["W"] = layout_.door_directions["N"]
 		return room
+
+@export_category("Monster_Prefabs")
+@export var slime: PackedScene
 
 @export_category("Debug")
 @export var generation_output: bool = false
@@ -64,11 +68,7 @@ func _ready():
 	generate_room_patterns()
 
 func _process(delta):
-	if Input.is_action_just_pressed("generate_layer"):
-		clear_layer()
-		while(not generate_dungeon_layer(30)): clear_layer()
-	if Input.is_action_just_pressed("clear_layer"):
-		clear_layer()
+	pass
 
 func clear_layer():
 	dungeon_tile_map.clear()
@@ -216,6 +216,14 @@ func grid_to_world_pos(grid_coords: Vector2i) -> Vector2:
 	return (16 * grid_coords * tiles_per_room_unit) as Vector2 + Vector2(16 * 0.5 * tiles_per_room_unit, 16 * 0.5 * tiles_per_room_unit)
 func get_tilemap_corner_from_grid_coords(grid_coords: Vector2i) -> Vector2i:
 	return grid_coords * tiles_per_room_unit
+func world_to_grid_pos(world_pos: Vector2) -> Vector2i:
+	return Vector2i(world_pos / (tiles_per_room_unit * 16))
+func get_used_room_coords() -> Array[Vector2i]:
+	var coords: Array[Vector2i] = []
+	var keys = dungeon_rooms.keys()
+	for k in keys:
+		coords.append(k)
+	return coords
 func get_local_door_coords(dir: int) -> Array[Vector2i]:
 	var coords: Array[Vector2i] = []
 	if dir == 0:
@@ -247,7 +255,59 @@ func get_local_door_coords(dir: int) -> Array[Vector2i]:
 		coords.append(vec + Vector2i(0, 1))
 		coords.append(vec + Vector2i(0, 2))
 	return coords
-	
+
+func activate_room(grid_coord: Vector2i, player_node: Player, enemy_parent_node: Node2D):
+	if not dungeon_rooms.has(grid_coord):
+		return
+	print("activated room " + str(grid_coord))
+	var enemy_locations: Array[Vector2i] = dungeon_rooms[grid_coord].enemy_spawn_locations
+	for e in enemy_locations:
+		var enemy = slime.instantiate()
+		var start_pos = 16 * (get_tilemap_corner_from_grid_coords(grid_coord) + e)
+		enemy.init(player_node, start_pos)
+		enemy_parent_node.add_child(enemy)
+
+func complete_room(grid_coord: Vector2i):
+	const floor_idx = 6
+	if not dungeon_rooms.has(grid_coord):
+		return
+	if dungeon_rooms.has(grid_coord + Vector2i(0,-1)):
+		var to_replace = get_local_door_coords(0)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		to_replace = get_local_door_coords(2)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,-1)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,-1)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,-1)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+	if dungeon_rooms.has(grid_coord + Vector2i(1,0)):
+		var to_replace = get_local_door_coords(1)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		to_replace = get_local_door_coords(3)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(1,0)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(1,0)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(1,0)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+	if dungeon_rooms.has(grid_coord + Vector2i(0,1)):
+		var to_replace = get_local_door_coords(2)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		to_replace = get_local_door_coords(0)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,1)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,1)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,1)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+	if dungeon_rooms.has(grid_coord + Vector2i(-1,0)):
+		var to_replace = get_local_door_coords(3)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		to_replace = get_local_door_coords(1)
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(-1,0)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(-1,0)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(-1,0)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
+		
 func spawn_room_at_grid(grid_coord: Vector2i, room_layout_idx: int, room_rotation: int = 0) -> bool:
 	if room_layout_idx >= num_room_layouts:
 		return false
@@ -255,9 +315,9 @@ func spawn_room_at_grid(grid_coord: Vector2i, room_layout_idx: int, room_rotatio
 	if dungeon_occupation_grid[grid_coord.y][grid_coord.x]:
 		return false
 	var location = get_tilemap_corner_from_grid_coords(grid_coord)
-	draw_and_rotate_pattern(location, room_patterns[room_layouts[room_layout_idx]], room_rotation)
+	var enemy_locations := draw_and_rotate_pattern(location, room_patterns[room_layouts[room_layout_idx]], room_rotation)
 	dungeon_occupation_grid[grid_coord.y][grid_coord.x] = true
-	var room_instance = Room.create(room, room_layout_idx, grid_coord, room_rotation)
+	var room_instance = Room.create(room, room_layout_idx, grid_coord, room_rotation, enemy_locations)
 	dungeon_rooms[grid_coord] = room_instance
 	return true
 
@@ -318,7 +378,8 @@ func get_room_layout_with_min_doors(num_doors: int) -> Array[int]:
 			rooms.append(idx)
 	return rooms
 
-func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_rotation: int):
+#returns rotated local coordinates of spawn locations
+func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_rotation: int) -> Array[Vector2i]:
 	var paste_tile_map = $Template_Paste_Pattern
 	var rotate_tile_map = $Template_Rotate_Pattern
 	paste_tile_map.set_pattern(Vector2i(-tiles_per_room_unit/2,-tiles_per_room_unit/2), pattern)
@@ -337,24 +398,29 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 					coord = Vector2i(vec.y, -vec.x)
 			coord += Vector2i(tiles_per_room_unit/2,tiles_per_room_unit/2)
 			rotate_tile_map.set_cell(coord, paste_tile_map.get_cell_source_id(vec), paste_tile_map.get_cell_atlas_coords(vec))
+	const floor_tile_atlas_x = 0
+	const enemy_spawn_atlas_tile_x = 2
+	var enemy_spawn_coords: Array[Vector2i] = []
 	for x in range(tiles_per_room_unit):
 		for y in range(tiles_per_room_unit):
-			var middle = rotate_tile_map.get_cell_atlas_coords(Vector2i(x,y)).x
-			var top = rotate_tile_map.get_cell_atlas_coords(Vector2i(x,y-1)).x
-			var right = rotate_tile_map.get_cell_atlas_coords(Vector2i(x+1,y)).x
-			var bot = rotate_tile_map.get_cell_atlas_coords(Vector2i(x,y+1)).x
-			var left = rotate_tile_map.get_cell_atlas_coords(Vector2i(x-1,y)).x
-			var top_left = rotate_tile_map.get_cell_atlas_coords(Vector2i(x-1,y-1)).x
-			var top_right = rotate_tile_map.get_cell_atlas_coords(Vector2i(x+1,y-1)).x
-			var bottom_left = rotate_tile_map.get_cell_atlas_coords(Vector2i(x-1,y+1)).x
-			var bottom_right = rotate_tile_map.get_cell_atlas_coords(Vector2i(x+1,y+1)).x
-			var atlas_coords = mapping_room_description_to_tile(middle, top, left, right, bot, top_left, top_right, bottom_left, bottom_right)
+			var cells = []
+			cells.resize(9)
+			for xx in range(-1, 2):
+				for yy in range(-1, 2):
+					var val = rotate_tile_map.get_cell_atlas_coords(Vector2i(x + xx,y + yy)).x
+					if val == enemy_spawn_atlas_tile_x:
+						if xx == 0 and yy == 0:
+							enemy_spawn_coords.append(Vector2i(x,y))
+						val = floor_tile_atlas_x
+					cells[(yy+1)*3+xx+1] = val
+			var atlas_coords = mapping_room_description_to_tile(cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6], cells[7], cells[8])
 			if atlas_coords != Vector2i(-1,-1):
 				dungeon_tile_map.set_cell(location + Vector2i(x,y), 0, atlas_coords)
 	paste_tile_map.clear()
 	rotate_tile_map.clear()
+	return enemy_spawn_coords
 
-func mapping_room_description_to_tile(middle, top, left, right, bottom, top_left, top_right, bottom_left, bottom_right) -> Vector2i:
+func mapping_room_description_to_tile(top_left, top, top_right, left, middle, right, bottom_left, bottom, bottom_right) -> Vector2i:
 	const nothing = -1
 	const floor = 0
 	const wall = 1

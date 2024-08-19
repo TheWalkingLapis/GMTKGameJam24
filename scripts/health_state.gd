@@ -24,7 +24,7 @@ func take_damage(dmg: int):
 	if dead: return
 	current_hp -= dmg
 	is_damaged.emit()
-	if current_hp < 0:
+	if current_hp <= 0:
 		dead = true
 		lethal_damage_taken.emit()
 
