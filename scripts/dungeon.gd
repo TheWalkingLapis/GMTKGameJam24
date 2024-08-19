@@ -100,12 +100,6 @@ func clear_layer():
 	num_enemy_killed = 0
 	player.set_scaling(0.0)
 	player.health_module.heal(1000)
-	player.add_fire_charge()
-	player.add_fire_charge()
-	player.add_fire_charge()
-	player.add_water_charge()
-	player.add_water_charge()
-	player.add_water_charge()
 	enemy_dead.emit(0.0)
 	ready_for_next_floor = false
 	for y in range(max_dungeon_size.y):
@@ -226,11 +220,10 @@ func generate_dungeon_layer(num_rooms: int) -> bool:
 					room_rotation %= 2
 				Room_Layout.RoomDoorType.THREE:
 					if not room_layouts[next_room_idx].door_directions["N"]: room_rotation = 2
-					elif not room_layouts[next_room_idx].door_directions["E"]: room_rotation = 3
+					elif not room_layouts[next_room_idx].door_directions["E"]: room_rotation = 1
 					elif not room_layouts[next_room_idx].door_directions["S"]: room_rotation = 0
-					elif not room_layouts[next_room_idx].door_directions["W"]: room_rotation = 1
+					elif not room_layouts[next_room_idx].door_directions["W"]: room_rotation = 3
 					room_rotation += i
-					room_rotation %= 4
 					room_rotation += randi_range(1, 3)
 					room_rotation %= 4
 				Room_Layout.RoomDoorType.ALL:
@@ -245,7 +238,7 @@ func generate_dungeon_layer(num_rooms: int) -> bool:
 			break
 	place_doors_where_connected()
 	if generation_output: print("Spawned " + str(room_counter) + " Rooms")
-	return room_counter > 0.5 * num_rooms
+	return room_counter > 0.75 * num_rooms
 
 func grid_to_world_pos(grid_coords: Vector2i) -> Vector2:
 	return (16 * grid_coords * tiles_per_room_unit) as Vector2 + Vector2(16 * 0.5 * tiles_per_room_unit, 16 * 0.5 * tiles_per_room_unit)

@@ -24,7 +24,7 @@ func handle_floor_done():
 func load_next_dungeon_layer():
 	$Dungeon.clear_layer()
 	dungeon_rooms.clear()
-	while(not $Dungeon.generate_dungeon_layer(5)): $Dungeon.clear_layer()
+	while(not $Dungeon.generate_dungeon_layer(10 + (dungeon_layer * 3))): $Dungeon.clear_layer()
 	$Dungeon.calculate_monster_number()
 	var room_coords: Array[Vector2i] = $Dungeon.get_used_room_coords()
 	for coord in room_coords:
@@ -40,6 +40,9 @@ func load_next_dungeon_layer():
 		e_node.queue_free()
 
 func _process(delta):
+	if Input.is_action_just_pressed("new_dungeon"):
+		load_next_dungeon_layer()
+		return
 	if Input.is_action_just_released("zoom_in"):
 		$Camera2D.zoom *= 1.2
 		print($Camera2D.zoom)
