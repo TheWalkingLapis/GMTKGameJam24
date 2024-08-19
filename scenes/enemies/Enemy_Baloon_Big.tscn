@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6dxve1qr3q5g"]
+[gd_scene load_steps=8 format=3 uid="uid://dcogpmgkl4eqf"]
 
 [ext_resource type="Script" path="res://scripts/enemy_baloon_big.gd" id="1_jmiks"]
 [ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="2_bpvyk"]
-[ext_resource type="Texture2D" uid="uid://bgntgd50yboi2" path="res://assets/textures/sprites_enemies.png" id="3_eo5rg"]
+[ext_resource type="Texture2D" uid="uid://cufqgb5xea374" path="res://assets/textures/sprites_enemies.png" id="3_eo5rg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yhf4s"]
 radius = 4.0

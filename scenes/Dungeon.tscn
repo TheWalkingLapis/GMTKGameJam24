@@ -1,10 +1,15 @@
-[gd_scene load_steps=8 format=4 uid="uid://dynq8fpolkn28"]
+[gd_scene load_steps=13 format=4 uid="uid://dynq8fpolkn28"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_0vvrt"]
 [ext_resource type="Texture2D" uid="uid://bo2uk8urbjfsl" path="res://assets/textures/sprites_tiles.png" id="2_8oihg"]
 [ext_resource type="PackedScene" uid="uid://bolcvht4ad50f" path="res://scenes/enemies/Slime.tscn" id="2_jiuuu"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Enemy_Slime_Big.tscn" id="3_jr87g"]
 [ext_resource type="TileSet" uid="uid://dhxjuii7imksi" path="res://ressources/dungeon_template_tiles.tres" id="3_vewhh"]
+[ext_resource type="PackedScene" uid="uid://b1k0hoorun4gw" path="res://scenes/enemies/Enemy_Baloon_Small.tscn" id="4_ikc1o"]
 [ext_resource type="PackedScene" uid="uid://bno2pbm66sd76" path="res://scenes/Room_Layout.tscn" id="4_sj3dx"]
+[ext_resource type="PackedScene" uid="uid://dcogpmgkl4eqf" path="res://scenes/enemies/Enemy_Baloon_Big.tscn" id="5_2gaft"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Enemy_Chest.tscn" id="6_6emmw"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Enemy_Stone.tscn" id="7_2bdm7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7nvjd"]
 texture = ExtResource("2_8oihg")
@@ -55,7 +60,7 @@ sources/0 = SubResource("TileSetAtlasSource_7nvjd")
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_0vvrt")
-enemies = Array[PackedScene]([ExtResource("2_jiuuu")])
+enemies = Array[PackedScene]([ExtResource("2_jiuuu"), ExtResource("3_jr87g"), ExtResource("4_ikc1o"), ExtResource("5_2gaft"), ExtResource("6_6emmw"), ExtResource("7_2bdm7")])
 max_dungeon_size = Vector2i(20, 20)
 
 [node name="Dungeon_TileMap" type="TileMapLayer" parent="."]

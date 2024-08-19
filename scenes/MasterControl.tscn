@@ -7,6 +7,17 @@
 [node name="MasterControl" type="Node2D"]
 script = ExtResource("1_s4qf5")
 
-[node name="GameController" parent="." instance=ExtResource("1_ccbyy")]
+[node name="BGLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="BGLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="IngameOverlay" parent="." instance=ExtResource("2_fm0a8")]
+
+[node name="GameController" parent="." instance=ExtResource("1_ccbyy")]

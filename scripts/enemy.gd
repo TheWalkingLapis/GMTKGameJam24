@@ -3,7 +3,7 @@ class_name Enemy
 
 signal enemy_dead
 
-@export var movement_speed: float = 10.0
+@export var movement_speed: float = 1700.0
 @export var value: int = 0 # for progression at altar
 @export var melee_damage: int = 10
 var melee_damage_cooldown: float = 0.5
