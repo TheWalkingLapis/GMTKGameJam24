@@ -85,13 +85,24 @@ func _process(delta):
 	#position += velocity * delta
 	move_and_slide()
 
+func add_fire_charge():
+	if fire_ball_charges < 3:
+		fire_ball_charges += 1
+func add_water_charge():
+	if water_ball_charges < 3:
+		water_ball_charges += 1
+func needs_water_charges() -> bool:
+	return water_ball_charges < 3
+func needs_fire_charges() -> bool:
+	return fire_ball_charges < 3
+
 func select_next_spell():
 	match selected_spell:
 			Spell.SpellName.BASIC_PLAYER_BALL:
 				if fire_ball_charges > 0:
 					selected_spell = Spell.SpellName.FIREBALL
 					changed_spell_type.emit(selected_spell)
-				if water_ball_charges > 0:
+				elif water_ball_charges > 0:
 					selected_spell = Spell.SpellName.WATERBALL
 					changed_spell_type.emit(selected_spell)
 			Spell.SpellName.FIREBALL:

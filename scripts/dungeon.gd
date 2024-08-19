@@ -38,8 +38,9 @@ class Room:
 				room.door_slots["W"] = layout_.door_directions["N"]
 		return room
 
-@export_category("Monster_Prefabs")
+@export_category("Prefabs")
 @export var enemies: Array[PackedScene]
+@export var interactable: PackedScene
 
 @export_category("Debug")
 @export var generation_output: bool = false
@@ -52,12 +53,15 @@ var num_room_layouts: int
 var room_patterns: Dictionary
 @onready var dungeon_tile_map: TileMapLayer = $"Dungeon_TileMap"
 @onready var decoration_tile_map: TileMapLayer = $"Decoration_TileMap"
+@onready var interactable_node: Node2D = $Interactables
 var dungeon_occupation_grid: Array[Array] = []
 var dungeon_rooms: Dictionary
 var num_max_enemy_spawns = 0
 var num_enemy_killed = 0
 static var tiles_per_room_unit: int = 15
+var player: Player
 
+const interactable_deco_tiles: Array[Vector2i] = [Vector2i(0,0), Vector2i(2,2), Vector2i(0,1), Vector2i(0,3), Vector2i(2,3)]
 # none, torch, hole_1, hole_2, water
 const deco_wall_tiles: Array[Vector2i] = [Vector2i(-1,-1), Vector2i(0,0), Vector2i(0,2), Vector2i(1,2), Vector2i(2,2)]
 const deco_wall_probs: Array[int] = [48, 10, 2, 1, 3]
@@ -81,6 +85,9 @@ func _ready():
 	num_room_layouts = room_layouts.size()
 	generate_room_patterns()
 
+func set_player(player_):
+	player = player_
+
 func _process(delta):
 	pass
 
@@ -92,6 +99,8 @@ func clear_layer():
 	for y in range(max_dungeon_size.y):
 		for x in range(max_dungeon_size.x):
 			dungeon_occupation_grid[y][x] = false
+	for c in interactable_node.get_children():
+		c.queue_free()
 
 func get_cardinal_neighbour_count(grid_coord: Vector2i) -> int:
 	var count = 0
@@ -465,6 +474,12 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 								break
 						if deco_tile_idx != Vector2i(-1,-1):
 							decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
+							if deco_tile_idx in interactable_deco_tiles:
+								var deco_entity = interactable.instantiate()
+								deco_entity.init(location + Vector2i(x,y), deco_tile_idx)
+								deco_entity.position = location * 16.0 + Vector2(x,y) * 16.0 + Vector2(8.0, 8.0)
+								deco_entity.interactable_replace.connect(replace_deco_tile)
+								interactable_node.add_child(deco_entity)
 						decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
 					elif atlas_coords.x >= 6 and atlas_coords.x <= 11: # floor
 						var ran = randi() % deco_floor_sum
@@ -477,6 +492,12 @@ func draw_and_rotate_pattern(location: Vector2i, pattern: TileMapPattern, room_r
 								break
 						if deco_tile_idx != Vector2i(-1,-1):
 							decoration_tile_map.set_cell(location + Vector2i(x,y), 0, deco_tile_idx)
+							if deco_tile_idx in interactable_deco_tiles:
+								var deco_entity = interactable.instantiate()
+								deco_entity.init(location + Vector2i(x,y), deco_tile_idx)
+								deco_entity.global_position = location * 16.0 + Vector2(x,y) * 16.0 + Vector2(8.0, 8.0)
+								deco_entity.interactable_replace.connect(replace_deco_tile)
+								interactable_node.add_child(deco_entity)
 						
 	paste_tile_map.clear()
 	rotate_tile_map.clear()
@@ -551,3 +572,6 @@ func generate_room_patterns():
 	for id in range(room_layouts.size()):
 		var room = room_layouts[id]
 		room_patterns[room] = room.get_room_pattern()
+
+func replace_deco_tile(grid_pos, atlas_idx):
+	decoration_tile_map.set_cell(grid_pos, 0, atlas_idx)

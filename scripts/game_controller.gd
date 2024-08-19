@@ -6,6 +6,7 @@ var dungeon_rooms: Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	dungeon.set_player(player)
 	load_next_dungeon_layer()
 
 func load_next_dungeon_layer():
@@ -16,10 +17,15 @@ func load_next_dungeon_layer():
 	var room_coords: Array[Vector2i] = $Dungeon.get_used_room_coords()
 	for coord in room_coords:
 		dungeon_rooms[coord] = 0
-	dungeon_rooms[$Dungeon.world_to_grid_pos($Player.position)] = 1
-	$Camera2D.position = $Dungeon.grid_to_world_pos($Dungeon.max_dungeon_size / 2)
 	$Player.position = $Dungeon.grid_to_world_pos($Dungeon.max_dungeon_size / 2)
-	# TODO clear Enemies
+	dungeon_rooms[$Dungeon.world_to_grid_pos($Player.position)] = 1
+	var neighbours: Array[int] = []
+	$Dungeon.complete_room($Dungeon.world_to_grid_pos($Player.position), neighbours)
+	$Camera2D.position = $Dungeon.grid_to_world_pos($Dungeon.max_dungeon_size / 2)
+	for e_node in $Enemies.get_children():
+		for e in e_node.get_children():
+			e.queue_free()
+		e_node.queue_free()
 
 func _process(delta):
 	if Input.is_action_just_released("zoom_in"):
