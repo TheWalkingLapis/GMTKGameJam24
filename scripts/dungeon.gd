@@ -66,10 +66,10 @@ const interactable_deco_tiles: Array[Vector2i] = [Vector2i(0,0), Vector2i(2,2), 
 const deco_wall_tiles: Array[Vector2i] = [Vector2i(-1,-1), Vector2i(0,0), Vector2i(0,2), Vector2i(1,2), Vector2i(2,2)]
 const deco_wall_probs: Array[int] = [48, 10, 2, 1, 3]
 const deco_wall_sum: int = 64
-# none, camp_fire, puddle_1, puddle_2, bone_1, bone_2
-const deco_floor_tiles: Array[Vector2i] = [Vector2i(-1,-1), Vector2i(0,1), Vector2i(0,3), Vector2i(2,3), Vector2i(5,4), Vector2i(6,4)]
-const deco_floor_probs: Array[int] = [300, 5, 3, 2, 2, 1]
-const deco_floor_sum: int = 313
+# none, camp_fire, puddle_1, puddle_2, bone_1, bone_2, gold_1, gold_2, gold_3
+const deco_floor_tiles: Array[Vector2i] = [Vector2i(-1,-1), Vector2i(0,1), Vector2i(0,3), Vector2i(2,3), Vector2i(5,4), Vector2i(6,4), Vector2i(1,4), Vector2i(2,4), Vector2i(3,4)]
+const deco_floor_probs: Array[int] = [400, 6, 4, 2, 5, 5, 3, 3, 3]
+const deco_floor_sum: int = 431
 
 func _ready():
 	# init occupation grid

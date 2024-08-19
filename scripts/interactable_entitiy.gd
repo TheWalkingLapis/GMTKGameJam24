@@ -16,9 +16,12 @@ func _ready():
 func init(pos, tile_idx):
 	needs_input = false
 	tile_pos = pos
-	atlas_idx = tile_idx
-	is_fire = true
-	is_water = true
+	if tile_idx == Vector2i(0,1):
+		atlas_idx = Vector2i(3,8) if randi() % 2 == 0 else Vector2i(2,8)
+	else:
+		atlas_idx = Vector2i(-1,-1)
+	is_fire = tile_idx in [Vector2i(0,0), Vector2i(0,1)]
+	is_water = tile_idx in [Vector2i(2,2), Vector2i(0,3), Vector2i(2,3)]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
