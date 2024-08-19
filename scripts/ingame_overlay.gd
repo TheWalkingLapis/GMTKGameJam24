@@ -21,7 +21,9 @@ func set_current_spell_tex(spell: Spell.SpellName):
 	if spell == Spell.SpellName.WATERBALL:
 		current_spell_node.texture = spell_textures[1]
 		attack_cd_bar.texture_progress = attack_bar_textures[1]
-	# TODO water and basic
+	if spell == Spell.SpellName.BASIC_PLAYER_BALL:
+		current_spell_node.texture = spell_textures[2]
+		attack_cd_bar.texture_progress = attack_bar_textures[2]
 
 func set_fire_charges(num_charges: int):
 	if num_charges < 0 or num_charges > 3:

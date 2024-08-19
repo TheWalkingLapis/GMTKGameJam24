@@ -1,9 +1,12 @@
-[gd_scene load_steps=28 format=3 uid="uid://vnlt4wxkt7lw"]
+[gd_scene load_steps=31 format=3 uid="uid://vnlt4wxkt7lw"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wya4p"]
 [ext_resource type="Texture2D" uid="uid://cln4wixxhcvlm" path="res://assets/textures/character_sprites.png" id="2_trcvs"]
 [ext_resource type="PackedScene" uid="uid://ep6dk460370p" path="res://scenes/modules/CombatModule.tscn" id="3_uiaik"]
+[ext_resource type="PackedScene" uid="uid://de237hrukf5f5" path="res://scenes/spells/FireBall.tscn" id="4_vuj41"]
 [ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="4_xijir"]
+[ext_resource type="PackedScene" uid="uid://cvn3lvlcc071p" path="res://scenes/spells/WaterBall.tscn" id="5_p5ekj"]
+[ext_resource type="PackedScene" uid="uid://cau70tp464cpx" path="res://scenes/spells/BasicPlayerBall.tscn" id="6_eydmc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bdiql"]
 radius = 5.0
@@ -189,5 +192,6 @@ animation = &"walk"
 
 [node name="CombatModule" parent="." instance=ExtResource("3_uiaik")]
 is_player = true
+spells = Array[PackedScene]([ExtResource("4_vuj41"), ExtResource("5_p5ekj"), ExtResource("6_eydmc")])
 
 [node name="HealthState" parent="." instance=ExtResource("4_xijir")]

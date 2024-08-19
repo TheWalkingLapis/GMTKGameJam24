@@ -87,18 +87,20 @@ func _process(delta):
 
 func select_next_spell():
 	match selected_spell:
-			# TODO aa
+			Spell.SpellName.BASIC_PLAYER_BALL:
+				if fire_ball_charges > 0:
+					selected_spell = Spell.SpellName.FIREBALL
+					changed_spell_type.emit(selected_spell)
+				if water_ball_charges > 0:
+					selected_spell = Spell.SpellName.WATERBALL
+					changed_spell_type.emit(selected_spell)
 			Spell.SpellName.FIREBALL:
 				if water_ball_charges > 0:
 					selected_spell = Spell.SpellName.WATERBALL
 					changed_spell_type.emit(selected_spell)
 				else:
-					# TODO aa
-					selected_spell = Spell.SpellName.WATERBALL
-			Spell.SpellName.WATERBALL:
-				if fire_ball_charges > 0:
-					selected_spell = Spell.SpellName.FIREBALL
+					selected_spell = Spell.SpellName.BASIC_PLAYER_BALL
 					changed_spell_type.emit(selected_spell)
-				else:
-					# TODO aa
-					selected_spell = Spell.SpellName.FIREBALL
+			Spell.SpellName.WATERBALL:
+				selected_spell = Spell.SpellName.BASIC_PLAYER_BALL
+				changed_spell_type.emit(selected_spell)

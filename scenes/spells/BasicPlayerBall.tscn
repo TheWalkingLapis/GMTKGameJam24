@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://cau70tp464cpx"]
 
 [ext_resource type="Script" path="res://scripts/basic_player_ball.gd" id="1_4ahxj"]
-[ext_resource type="Texture2D" uid="uid://bgntgd50yboi2" path="res://assets/textures/sprites_enemies.png" id="2_g3r0e"]
+[ext_resource type="Texture2D" uid="uid://cufqgb5xea374" path="res://assets/textures/sprites_enemies.png" id="2_g3r0e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0ycl"]
 atlas = ExtResource("2_g3r0e")
@@ -66,7 +66,7 @@ animations = [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_63b71")
 }, {
-"duration": 0.3,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_bwe6i")
 }],
 "loop": false,
@@ -80,6 +80,8 @@ radius = 4.0
 [node name="BasicPlayerBall" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource("1_4ahxj")
+base_damage = 100
+flight_speed = 120.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_v8etk")

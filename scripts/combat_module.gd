@@ -3,7 +3,7 @@ class_name CombatModule
 
 signal enemy_hit(enemy: Object)
 
-var spell_name_to_idx = {Spell.SpellName.FIREBALL: 0, Spell.SpellName.WATERBALL: 1}
+var spell_name_to_idx = {Spell.SpellName.FIREBALL: 0, Spell.SpellName.WATERBALL: 1, Spell.SpellName.BASIC_PLAYER_BALL: 2}
 @export var is_player: bool = false
 @export var spells: Array[PackedScene]
 @export var attack_cooldown: float = 0.5

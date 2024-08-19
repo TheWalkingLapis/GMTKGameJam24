@@ -60,7 +60,7 @@ radius = 4.0
 collision_layer = 0
 script = ExtResource("1_7t7o6")
 base_damage = 100
-flight_speed = 100.0
+flight_speed = 120.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_v8etk")

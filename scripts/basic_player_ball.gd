@@ -23,9 +23,9 @@ func _process(delta):
 func handle_collision(collision: KinematicCollision2D):
 	super(collision)
 	$CollisionShape2D.disabled = true
-	if $AnimatedSprite2D.get_frame() <= 2:
-		var progress = 1.0 - ((0.5+0.5+0.5) / (0.5+1+4+0.5+0.5+0.5))
-		$AnimatedSprite2D.set_frame_and_progress(3, progress)
+	if $AnimatedSprite2D.get_frame() <= 5:
+		var progress = 1.0 - ((0.5+0.5+0.5) / (0.5+0.5+0.5+0.5+1+5+0.5+0.5+0.5))
+		$AnimatedSprite2D.set_frame_and_progress(6, progress)
 
 func _on_animated_sprite_2d_animation_finished():
 	die()
