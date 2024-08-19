@@ -42,6 +42,15 @@ func _process(delta):
 		if e_node is Node2D:
 			if e_node.get_child_count() == 0:
 				var room_pos = e_node.position as Vector2i
-				$Dungeon.complete_room(room_pos)
+				var completed_neighbours: Array[int] = []
+				if dungeon_rooms.has(room_pos + Vector2i(0,-1)):
+					if dungeon_rooms[room_pos + Vector2i(0,-1)] == 1: completed_neighbours.append(0)
+				if dungeon_rooms.has(room_pos + Vector2i(1,0)):
+					if dungeon_rooms[room_pos + Vector2i(1,0)] == 1: completed_neighbours.append(1)
+				if dungeon_rooms.has(room_pos + Vector2i(0,1)):
+					if dungeon_rooms[room_pos + Vector2i(0,1)] == 1: completed_neighbours.append(2)
+				if dungeon_rooms.has(room_pos + Vector2i(-1,0)):
+					if dungeon_rooms[room_pos + Vector2i(-1,0)] == 1: completed_neighbours.append(3)
+				$Dungeon.complete_room(room_pos, completed_neighbours)
 				print("Completed Room " + str(room_pos))
 				e_node.queue_free()

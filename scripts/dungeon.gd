@@ -95,9 +95,7 @@ func get_cardinal_neighbour_count(grid_coord: Vector2i) -> int:
 
 func generate_dungeon_layer(num_rooms: int) -> bool:
 	var room_counter = 1
-	var spawn_room_candidates = get_room_layout_with_min_doors(3)
-	var spawn_room_idx = spawn_room_candidates[randi() % spawn_room_candidates.size()]
-	spawn_room_at_grid(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2), spawn_room_idx)
+	spawn_start_room(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
 	
 	var queue: Array[Vector2i]
 	queue.push_back(Vector2i(max_dungeon_size.x / 2, max_dungeon_size.y / 2))
@@ -267,11 +265,11 @@ func activate_room(grid_coord: Vector2i, player_node: Player, enemy_parent_node:
 		enemy.init(player_node, start_pos)
 		enemy_parent_node.add_child(enemy)
 
-func complete_room(grid_coord: Vector2i):
+func complete_room(grid_coord: Vector2i, completed_neighbours: Array[int]):
 	const floor_idx = 6
 	if not dungeon_rooms.has(grid_coord):
 		return
-	if dungeon_rooms.has(grid_coord + Vector2i(0,-1)):
+	if dungeon_rooms.has(grid_coord + Vector2i(0,-1)) and 0 not in completed_neighbours:
 		var to_replace = get_local_door_coords(0)
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
@@ -280,7 +278,7 @@ func complete_room(grid_coord: Vector2i):
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,-1)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,-1)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,-1)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
-	if dungeon_rooms.has(grid_coord + Vector2i(1,0)):
+	if dungeon_rooms.has(grid_coord + Vector2i(1,0)) and 1 not in completed_neighbours:
 		var to_replace = get_local_door_coords(1)
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
@@ -289,7 +287,7 @@ func complete_room(grid_coord: Vector2i):
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(1,0)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(1,0)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(1,0)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
-	if dungeon_rooms.has(grid_coord + Vector2i(0,1)):
+	if dungeon_rooms.has(grid_coord + Vector2i(0,1)) and 2 not in completed_neighbours:
 		var to_replace = get_local_door_coords(2)
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
@@ -298,7 +296,7 @@ func complete_room(grid_coord: Vector2i):
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,1)) + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,1)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(0,1)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
-	if dungeon_rooms.has(grid_coord + Vector2i(-1,0)):
+	if dungeon_rooms.has(grid_coord + Vector2i(-1,0)) and 3 not in completed_neighbours:
 		var to_replace = get_local_door_coords(3)
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[1], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * grid_coord + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
@@ -308,6 +306,28 @@ func complete_room(grid_coord: Vector2i):
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(-1,0)) + to_replace[2], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		dungeon_tile_map.set_cell(tiles_per_room_unit * (grid_coord + Vector2i(-1,0)) + to_replace[3], 0, Vector2i(floor_idx + (randi() % 6), 0))
 		
+func spawn_start_room(grid_coord: Vector2i):
+	var candidates = $Spawn_Room_Layout.get_children()
+	var room = candidates[randi() % candidates.size()]
+	var location = get_tilemap_corner_from_grid_coords(grid_coord)
+	
+	for x in range(tiles_per_room_unit):
+		for y in range(tiles_per_room_unit):
+			var cells = []
+			cells.resize(9)
+			for xx in range(-1, 2):
+				for yy in range(-1, 2):
+					var val = room.get_cell_atlas_coords(Vector2i(x + xx,y + yy)).x
+					cells[(yy+1)*3+xx+1] = val
+			var atlas_coords = mapping_room_description_to_tile(cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6], cells[7], cells[8])
+			if atlas_coords != Vector2i(-1,-1):
+				dungeon_tile_map.set_cell(location + Vector2i(x,y), 0, atlas_coords)
+	
+	dungeon_occupation_grid[grid_coord.y][grid_coord.x] = true
+	var enemy_locations: Array[Vector2i] = []
+	var room_instance = Room.create(room, -1, grid_coord, 0, enemy_locations)
+	dungeon_rooms[grid_coord] = room_instance
+	
 func spawn_room_at_grid(grid_coord: Vector2i, room_layout_idx: int, room_rotation: int = 0) -> bool:
 	if room_layout_idx >= num_room_layouts:
 		return false
