@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://4q773oh3phsi"]
+[gd_scene load_steps=14 format=3 uid="uid://4q773oh3phsi"]
 
 [ext_resource type="Texture2D" uid="uid://dkj1sqj8s48lf" path="res://assets/textures/UI_Border.png" id="1_1l26e"]
 [ext_resource type="Script" path="res://scripts/ingame_overlay.gd" id="1_aut26"]
 [ext_resource type="Texture2D" uid="uid://decqdmfp754ps" path="res://assets/textures/fireball.png" id="2_p1ljr"]
+[ext_resource type="Texture2D" uid="uid://fnjmkcxbd6pp" path="res://assets/textures/water_ball.png" id="3_a0c8j"]
 [ext_resource type="Texture2D" uid="uid://dhbu1pl2liof7" path="res://assets/textures/spell_notch.png" id="3_qpebp"]
+[ext_resource type="Texture2D" uid="uid://dxiwvqsobtmam" path="res://assets/textures/player_basic.png" id="4_b67fk"]
 [ext_resource type="Texture2D" uid="uid://d0grn6aedjk2s" path="res://assets/textures/Attack_Cooldown_Under.png" id="4_rrq8h"]
 [ext_resource type="Texture2D" uid="uid://dsyejwpnrxfhp" path="res://assets/textures/Attack_Cooldown_Fire.png" id="5_6jj0a"]
 [ext_resource type="Texture2D" uid="uid://bu3phtcun7oir" path="res://assets/textures/spell_notch_fire.png" id="5_7xrop"]
@@ -14,7 +16,7 @@
 
 [node name="IngameOverlay" type="CanvasLayer"]
 script = ExtResource("1_aut26")
-spell_textures = Array[Texture]([ExtResource("2_p1ljr"), ExtResource("3_qpebp"), ExtResource("5_7xrop")])
+spell_textures = Array[Texture]([ExtResource("2_p1ljr"), ExtResource("3_a0c8j"), ExtResource("4_b67fk")])
 attack_bar_textures = Array[Texture]([ExtResource("5_6jj0a"), ExtResource("5_kq1x8"), ExtResource("7_2fxby")])
 
 [node name="Current_Spell_Border" type="TextureRect" parent="."]

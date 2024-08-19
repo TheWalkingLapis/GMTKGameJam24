@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5sg4l01imo14"]
+[gd_scene load_steps=3 format=3 uid="uid://b5sg4l01imo14"]
 
 [ext_resource type="Script" path="res://scripts/interactable_entitiy.gd" id="1_uxv6p"]
-[ext_resource type="Texture2D" uid="uid://dhbu1pl2liof7" path="res://assets/textures/spell_notch.png" id="2_dhvwv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k0h7d"]
 radius = 16.0
@@ -13,10 +12,5 @@ script = ExtResource("1_uxv6p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_k0h7d")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4.76837e-07, 4.76837e-07)
-scale = Vector2(0.3125, 0.3125)
-texture = ExtResource("2_dhvwv")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
