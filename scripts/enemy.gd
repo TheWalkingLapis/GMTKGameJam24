@@ -1,13 +1,19 @@
 extends CharacterBody2D
 class_name Enemy
 
-@export var health_module: HealthModule
+signal enemy_dead(value: int)
 
-# Called when the node enters the scene tree for the first time.
+@export var movement_speed: float = 10.0
+@export var value: int = 0 # for progression at altar
+
+func init(player_node: Player, start_pos: Vector2):
+	print("No constructor for enemy")
+
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	pass
 func _process(delta):
 	pass
+
+func die():
+	enemy_dead.emit(value)
+	queue_free()

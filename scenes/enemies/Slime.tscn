@@ -7,11 +7,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnadm"]
 radius = 8.0
 
-[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("health_module")]
+[node name="Slime" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 11
 script = ExtResource("1_dtoc8")
-health_module = NodePath("HealthState")
+value = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tnadm")

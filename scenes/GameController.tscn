@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://uaqhtbpw28c0"]
+[gd_scene load_steps=4 format=3 uid="uid://uaqhtbpw28c0"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_7y3ky"]
 [ext_resource type="PackedScene" uid="uid://dynq8fpolkn28" path="res://scenes/Dungeon.tscn" id="1_66ikf"]
 [ext_resource type="PackedScene" uid="uid://vnlt4wxkt7lw" path="res://scenes/Player.tscn" id="3_cxpec"]
-[ext_resource type="PackedScene" uid="uid://bolcvht4ad50f" path="res://scenes/enemies/Slime.tscn" id="4_f1twe"]
 
 [node name="GameController" type="Node2D"]
 script = ExtResource("1_7y3ky")
@@ -14,4 +13,4 @@ script = ExtResource("1_7y3ky")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Slime" parent="." instance=ExtResource("4_f1twe")]
+[node name="Enemies" type="Node" parent="."]
