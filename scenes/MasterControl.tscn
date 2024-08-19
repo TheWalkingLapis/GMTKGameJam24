@@ -3,11 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://uaqhtbpw28c0" path="res://scenes/GameController.tscn" id="1_ccbyy"]
 [ext_resource type="Script" path="res://scripts/master_control.gd" id="1_s4qf5"]
 [ext_resource type="PackedScene" uid="uid://4q773oh3phsi" path="res://scenes/UI/Ingame_Overlay.tscn" id="2_fm0a8"]
-[ext_resource type="Texture2D" uid="uid://nmayc3jvkkm3" path="res://assets/textures/EndScreen_Win.png" id="4_l0oaa"]
-[ext_resource type="Texture2D" uid="uid://dxgbiajkstofv" path="res://assets/textures/sprites_player.png" id="5_5but4"]
-[ext_resource type="Texture2D" uid="uid://dvlo7hh0lbol" path="res://assets/textures/EndScreen_Loose.png" id="5_emqql"]
-[ext_resource type="Texture2D" uid="uid://bgntgd50yboi2" path="res://assets/textures/sprites_enemies.png" id="6_pgsm7"]
-[ext_resource type="Texture2D" uid="uid://c1kn2vbbar70d" path="res://assets/textures/sprites_entities.png" id="7_7o5j7"]
+[ext_resource type="Texture2D" uid="uid://m5c5ppgoyyhi" path="res://assets/textures/EndScreen_Win.png" id="4_l0oaa"]
+[ext_resource type="Texture2D" uid="uid://b6g3l1mslgy4r" path="res://assets/textures/sprites_player.png" id="5_5but4"]
+[ext_resource type="Texture2D" uid="uid://df85cpqdxxrkr" path="res://assets/textures/EndScreen_Loose.png" id="5_emqql"]
+[ext_resource type="Texture2D" uid="uid://cufqgb5xea374" path="res://assets/textures/sprites_enemies.png" id="6_pgsm7"]
+[ext_resource type="Texture2D" uid="uid://jikwu2khk468" path="res://assets/textures/sprites_entities.png" id="7_7o5j7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvsw7"]
 atlas = ExtResource("5_5but4")
@@ -136,6 +136,8 @@ color = Color(0, 0, 0, 1)
 [node name="GameController" parent="." instance=ExtResource("1_ccbyy")]
 
 [node name="EndScreen_Win" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="EndScreen_Win"]
 offset_right = 1152.0
@@ -165,6 +167,7 @@ autoplay = "default"
 frame_progress = 0.381919
 
 [node name="EndScreen_Loose" type="CanvasLayer" parent="."]
+process_mode = 3
 visible = false
 
 [node name="TextureRect" type="TextureRect" parent="EndScreen_Loose"]

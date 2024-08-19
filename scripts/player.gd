@@ -9,6 +9,15 @@ signal attack_cooldown_percentage(percentage: float)
 @export var speed = 300.0
 @onready var health_module = $HealthState
 
+var scaling: float = 1.0 :
+	set(value):
+		scaling = value
+		scale = Vector2(value, value)
+
+func set_scaling(fac: float):
+	var step: int = 4 * fac
+	scaling = 1.0 + 0.25 * step
+
 var selected_spell: Spell.SpellName = Spell.SpellName.FIREBALL
 var fire_ball_charges: int = 3 :
 	set(value):

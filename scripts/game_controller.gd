@@ -8,11 +8,12 @@ var dungeon_rooms: Dictionary
 func _ready():
 	dungeon.set_player(player)
 	load_next_dungeon_layer()
+	dungeon.enemy_dead.connect(player.set_scaling)
 
 func load_next_dungeon_layer():
 	$Dungeon.clear_layer()
 	dungeon_rooms.clear()
-	while(not $Dungeon.generate_dungeon_layer(30)): $Dungeon.clear_layer()
+	while(not $Dungeon.generate_dungeon_layer(5)): $Dungeon.clear_layer()
 	$Dungeon.calculate_monster_number()
 	var room_coords: Array[Vector2i] = $Dungeon.get_used_room_coords()
 	for coord in room_coords:
@@ -30,10 +31,10 @@ func load_next_dungeon_layer():
 func _process(delta):
 	if Input.is_action_just_released("zoom_in"):
 		$Camera2D.zoom *= 1.2
+		print($Camera2D.zoom)
 	if Input.is_action_just_released("zoom_out"):
 		$Camera2D.zoom *= 0.8
-	if Input.is_action_just_pressed("generate_layer"):
-		load_next_dungeon_layer()
+		print($Camera2D.zoom)
 	var player_world_pos: Vector2 = $Player.position
 	var player_dungeon_pos: Vector2i = $Dungeon.world_to_grid_pos(player_world_pos)
 	if dungeon_rooms.has(player_dungeon_pos):
@@ -61,5 +62,4 @@ func _process(delta):
 				if dungeon_rooms.has(room_pos + Vector2i(-1,0)):
 					if dungeon_rooms[room_pos + Vector2i(-1,0)] == 1: completed_neighbours.append(3)
 				$Dungeon.complete_room(room_pos, completed_neighbours)
-				print("Completed Room " + str(room_pos))
 				e_node.queue_free()

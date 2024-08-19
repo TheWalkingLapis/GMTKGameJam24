@@ -9,6 +9,8 @@ var needs_input: bool = false
 var is_fire: bool = false
 var is_water: bool = false
 
+var player_inside: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -25,10 +27,14 @@ func init(pos, tile_idx):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if not needs_input: return
+	if player_inside and Input.is_action_just_pressed("interact"):
+		if tile_pos == Vector2i(0,0):
+			pass
 
 func _on_body_entered(body):
 	if body is Player:
+		player_inside = true
 		if is_fire and body.needs_fire_charges():
 			body.add_fire_charge()
 			interactable_replace.emit(tile_pos, atlas_idx)
@@ -39,3 +45,6 @@ func _on_body_entered(body):
 			interactable_replace.emit(tile_pos, atlas_idx)
 			queue_free()
 			return
+
+func _on_body_exited(body):
+	player_inside = false

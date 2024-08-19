@@ -282,7 +282,6 @@ func get_local_door_coords(dir: int) -> Array[Vector2i]:
 func activate_room(grid_coord: Vector2i, player_node: Player, enemy_parent_node: Node2D):
 	if not dungeon_rooms.has(grid_coord):
 		return
-	print("activated room " + str(grid_coord))
 	var enemy_locations: Array[Vector2i] = dungeon_rooms[grid_coord].enemy_spawn_locations
 	for e in enemy_locations:
 		var enemy = enemies[randi() % enemies.size()].instantiate()

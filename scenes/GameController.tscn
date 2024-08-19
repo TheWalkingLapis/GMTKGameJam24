@@ -12,5 +12,6 @@ script = ExtResource("1_7y3ky")
 [node name="Player" parent="." instance=ExtResource("3_cxpec")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
 
 [node name="Enemies" type="Node" parent="."]
