@@ -116,6 +116,15 @@ offset_bottom = 189.0
 bbcode_enabled = true
 text = " [font name=\"assets/fonts/kirifont/KiriFont.ttf\"][font_size=42][center]{The Blobman [on Fire] in the Miniature Dungeon}"
 
+[node name="RichTextLabel3" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = -42.0
+offset_top = 3.0
+offset_right = 640.0
+offset_bottom = 122.0
+bbcode_enabled = true
+text = "[font_size=54]                               [              ]"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1059, 241)
 scale = Vector2(9.375, 8.8125)

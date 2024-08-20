@@ -171,6 +171,7 @@ layer = 2
 
 [node name="Pause_Menu" type="CanvasLayer" parent="."]
 layer = 3
+visible = false
 
 [node name="Pause_BG" type="ColorRect" parent="Pause_Menu"]
 anchors_preset = 15
@@ -182,7 +183,7 @@ color = Color(0, 0, 0, 0.831373)
 
 [node name="Symbol_Explain" type="ColorRect" parent="Pause_Menu"]
 offset_left = 879.0
-offset_top = 193.0
+offset_top = 161.0
 offset_right = 1097.0
 offset_bottom = 518.0
 color = Color(0, 0, 0, 0.72549)
@@ -265,10 +266,10 @@ text = "[center][font_size=16
 
 [node name="TextureRect11" type="TextureRect" parent="Pause_Menu/Symbol_Explain"]
 layout_mode = 0
-offset_left = 23.0
-offset_top = 256.0
-offset_right = 71.0
-offset_bottom = 304.0
+offset_left = 27.0
+offset_top = 267.0
+offset_right = 75.0
+offset_bottom = 315.0
 texture = ExtResource("9_i7bnr")
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="Pause_Menu/Symbol_Explain"]
@@ -276,7 +277,7 @@ layout_mode = 0
 offset_left = 72.0
 offset_top = 249.0
 offset_right = 213.0
-offset_bottom = 322.0
+offset_bottom = 348.0
 mouse_filter = 2
 bbcode_enabled = true
 text = "[center][font_size=16
@@ -319,6 +320,7 @@ mouse_filter = 2
 texture = ExtResource("14_aj3wb")
 
 [node name="Settings_Menu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Settings_Menu"]
 anchors_preset = 15
