@@ -232,18 +232,22 @@ visible = false
 visible = false
 
 [node name="Enemy_Death_Sound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 volume_db = 3.0
 bus = &"SoundEffects"
 
 [node name="Enemy_Death_Sound2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 volume_db = 3.0
 bus = &"SoundEffects"
 
 [node name="Enemy_Death_Sound3" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 volume_db = 3.0
 bus = &"SoundEffects"
 
 [node name="Layer_cleared_Sound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("14_2lkwi")
 volume_db = -10.0
 bus = &"SoundEffects"

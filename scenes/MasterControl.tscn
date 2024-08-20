@@ -319,7 +319,14 @@ mouse_filter = 2
 texture = ExtResource("14_aj3wb")
 
 [node name="Settings_Menu" type="CanvasLayer" parent="."]
-visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Settings_Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="BackToMenu" type="ColorRect" parent="Settings_Menu"]
 offset_left = 885.0

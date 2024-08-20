@@ -52,6 +52,7 @@ func reset():
 	while(selected_spell != Spell.SpellName.FIREBALL): select_next_spell()
 	health_module.dead = false
 	health_module.heal(health_module.get_max_hp())
+	$CombatModule.reset()
 
 func _process(_delta):
 	velocity = Vector2.ZERO;

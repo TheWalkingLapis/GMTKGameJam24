@@ -207,45 +207,55 @@ spells = Array[PackedScene]([ExtResource("4_vuj41"), ExtResource("5_p5ekj"), Ext
 show_hp = false
 
 [node name="FireBall_Attack" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("8_8vb5b")
 volume_db = -5.0
 bus = &"SoundEffects"
 
 [node name="WaterBall_Attack" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("9_i35rr")
 volume_db = 5.0
 bus = &"SoundEffects"
 
 [node name="Basic_Attack" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("10_8nbxr")
 bus = &"SoundEffects"
 
 [node name="FireCharge_Gain" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("11_lrl7j")
 volume_db = 3.0
 bus = &"SoundEffects"
 
 [node name="FireCharge_Gain2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("11_lrl7j")
 volume_db = 3.0
 bus = &"SoundEffects"
 
 [node name="WaterCharge_Gain" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("12_1701m")
 bus = &"SoundEffects"
 
 [node name="WaterCharge_Gain2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("12_1701m")
 bus = &"SoundEffects"
 
 [node name="PlayerDamage1" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("13_71r6d")
 bus = &"SoundEffects"
 
 [node name="PlayerDamage2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("14_vgse7")
 bus = &"SoundEffects"
 
 [node name="PlayerDamage3" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("14_vgse7")
 bus = &"SoundEffects"

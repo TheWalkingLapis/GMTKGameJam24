@@ -15,6 +15,8 @@ var attack_cooldown_timer: float = 0.5
 func _ready():
 	pass # Replace with function body.
 
+func reset():
+	attack_cooldown_timer = attack_cooldown
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
