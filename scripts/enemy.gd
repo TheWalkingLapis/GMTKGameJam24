@@ -9,13 +9,8 @@ signal enemy_dead
 var melee_damage_cooldown: float = 0.5
 var melee_damage_cd_tracker: float = 0.0
 
-func init(player_node: Player, start_pos: Vector2):
+func init(_player_node: Player, _start_pos: Vector2):
 	print("No constructor for enemy")
-
-func _ready():
-	pass
-func _process(delta):
-	pass
 
 func die():
 	enemy_dead.emit()

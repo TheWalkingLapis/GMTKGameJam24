@@ -2,17 +2,20 @@ extends Node2D
 
 signal win
 signal room_change(rooms: Array[int])
+signal layer_change(layer_one_indexed: int)
 
 var dungeon_rooms: Dictionary
 @onready var player: Player = $Player
 @onready var dungeon: Dungeon = $Dungeon
-var dungeon_layer = 0
+var dungeon_layer: int = 0 :
+	set(val):
+		dungeon_layer = val
+		layer_change.emit(val + 1)
 var last_dungeon_pos = Vector2i(-1,-1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	dungeon.set_player(player)
-	load_next_dungeon_layer()
 	dungeon.enemy_dead.connect(player.set_scaling)
 	dungeon.trigger_next_floor.connect(handle_floor_done)
 
@@ -32,7 +35,7 @@ func handle_floor_done():
 func load_next_dungeon_layer():
 	$Dungeon.clear_layer()
 	dungeon_rooms.clear()
-	while(not $Dungeon.generate_dungeon_layer(10 + (dungeon_layer * 3))): $Dungeon.clear_layer()
+	while(not $Dungeon.generate_dungeon_layer(6 + (dungeon_layer * 2))): $Dungeon.clear_layer()
 	$Dungeon.calculate_monster_number()
 	var room_coords: Array[Vector2i] = $Dungeon.get_used_room_coords()
 	for coord in room_coords:
@@ -46,14 +49,20 @@ func load_next_dungeon_layer():
 		for e in e_node.get_children():
 			e.queue_free()
 		e_node.queue_free()
+	if dungeon_layer != 0: $HoleSound.play()
+	var player_dungeon_pos = $Dungeon.world_to_grid_pos($Player.position)
+	var rooms: Array[int] = [get_room_state(player_dungeon_pos + Vector2i(-1,-1)), 
+									get_room_state(player_dungeon_pos + Vector2i(0,-1)), 
+									get_room_state(player_dungeon_pos + Vector2i(1,-1)),
+									get_room_state(player_dungeon_pos + Vector2i(-1,0)), 
+									get_room_state(player_dungeon_pos), 
+									get_room_state(player_dungeon_pos + Vector2i(1,0)),
+									get_room_state(player_dungeon_pos + Vector2i(-1,1)), 
+									get_room_state(player_dungeon_pos + Vector2i(0,1)), 
+									get_room_state(player_dungeon_pos + Vector2i(1,1))]
+	room_change.emit(rooms)
 
 func _process(delta):
-	if Input.is_action_just_released("zoom_in"):
-		$Camera2D.zoom *= 1.2
-		print($Camera2D.zoom)
-	if Input.is_action_just_released("zoom_out"):
-		$Camera2D.zoom *= 0.8
-		print($Camera2D.zoom)
 	var player_world_pos: Vector2 = $Player.position
 	var player_dungeon_pos: Vector2i = $Dungeon.world_to_grid_pos(player_world_pos)
 	if dungeon_rooms.has(player_dungeon_pos):

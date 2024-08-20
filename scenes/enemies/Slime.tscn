@@ -36,6 +36,7 @@ motion_mode = 1
 script = ExtResource("1_dtoc8")
 movement_speed = 2000.0
 value = 1
+melee_damage = 20
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yhf4s")

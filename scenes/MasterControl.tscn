@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cp5owfr1krmgh"]
+[gd_scene load_steps=45 format=3 uid="uid://cp5owfr1krmgh"]
 
 [ext_resource type="PackedScene" uid="uid://uaqhtbpw28c0" path="res://scenes/GameController.tscn" id="1_ccbyy"]
 [ext_resource type="Script" path="res://scripts/master_control.gd" id="1_s4qf5"]
@@ -6,10 +6,29 @@
 [ext_resource type="Texture2D" uid="uid://bfr7r38tiuj08" path="res://assets/textures/corner_blur.png" id="2_vfhv7"]
 [ext_resource type="Texture2D" uid="uid://m5c5ppgoyyhi" path="res://assets/textures/EndScreen_Win.png" id="4_l0oaa"]
 [ext_resource type="Texture2D" uid="uid://b6g3l1mslgy4r" path="res://assets/textures/sprites_player.png" id="5_5but4"]
+[ext_resource type="Texture2D" uid="uid://cxl314881qqe3" path="res://assets/textures/key_F.png" id="5_atqsg"]
 [ext_resource type="Texture2D" uid="uid://df85cpqdxxrkr" path="res://assets/textures/EndScreen_Loose.png" id="5_emqql"]
+[ext_resource type="Texture2D" uid="uid://dfi7aug6300kd" path="res://assets/textures/altar_empty.png" id="5_nnho1"]
+[ext_resource type="Texture2D" uid="uid://dlelxt0vx4457" path="res://assets/textures/minimap_cleared.png" id="5_y0fdg"]
+[ext_resource type="Texture2D" uid="uid://tdf0hopo3h76" path="res://assets/textures/minimap_monsters_active.png" id="6_8jjqc"]
+[ext_resource type="Texture2D" uid="uid://tusj2q6hbqpn" path="res://assets/textures/altar_full.png" id="6_igyif"]
 [ext_resource type="Texture2D" uid="uid://cufqgb5xea374" path="res://assets/textures/sprites_enemies.png" id="6_pgsm7"]
+[ext_resource type="Texture2D" uid="uid://by5ghool0gvo8" path="res://assets/textures/minimap_not_explored.png" id="7_0lhtf"]
 [ext_resource type="Texture2D" uid="uid://jikwu2khk468" path="res://assets/textures/sprites_entities.png" id="7_7o5j7"]
+[ext_resource type="Texture2D" uid="uid://cd7i801upaeyf" path="res://assets/textures/player_icon.png" id="7_mpvgu"]
+[ext_resource type="Texture2D" uid="uid://di74l8tklakyo" path="res://assets/textures/hole.png" id="8_3ex44"]
+[ext_resource type="Texture2D" uid="uid://ba2f4e4pedr5x" path="res://assets/textures/minimap_spawn_room.png" id="8_ehmq7"]
+[ext_resource type="Texture2D" uid="uid://dhbu1pl2liof7" path="res://assets/textures/spell_notch.png" id="9_i7bnr"]
+[ext_resource type="Texture2D" uid="uid://d0grn6aedjk2s" path="res://assets/textures/Attack_Cooldown_Under.png" id="9_rqftx"]
 [ext_resource type="PackedScene" uid="uid://dt3mccu7kmtvn" path="res://scenes/UI/Title_Screen.tscn" id="10_eas2w"]
+[ext_resource type="Texture2D" uid="uid://c7a6d05wnbo5q" path="res://assets/textures/kill_progress.png" id="10_qmny2"]
+[ext_resource type="Texture2D" uid="uid://5ab340l4vqr1" path="res://assets/textures/keys_move.png" id="12_w68vd"]
+[ext_resource type="Texture2D" uid="uid://btxgd5dtxdyqv" path="res://assets/textures/keys_shoot.png" id="13_cl67o"]
+[ext_resource type="Texture2D" uid="uid://bw2p6x6a4d6yy" path="res://assets/textures/key_P.png" id="14_aj3wb"]
+[ext_resource type="Texture2D" uid="uid://dpgym4q0pykab" path="res://assets/textures/key_E.png" id="15_4huvo"]
+[ext_resource type="Texture2D" uid="uid://dfsukojqxamer" path="res://assets/textures/key_esc.png" id="16_vuc2b"]
+[ext_resource type="Texture2D" uid="uid://cdw58blsupipm" path="res://assets/textures/key_tab.png" id="17_7qvni"]
+[ext_resource type="AudioStream" uid="uid://fqlk8l53gbut" path="res://assets/sfx/In the Miniature Dungeon.wav" id="29_7btwb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvsw7"]
 atlas = ExtResource("5_5but4")
@@ -152,15 +171,705 @@ layer = 2
 
 [node name="Pause_Menu" type="CanvasLayer" parent="."]
 layer = 3
-visible = false
 
-[node name="Pause_Menu" type="ColorRect" parent="Pause_Menu"]
+[node name="Pause_BG" type="ColorRect" parent="Pause_Menu"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.831373)
+
+[node name="Symbol_Explain" type="ColorRect" parent="Pause_Menu"]
+offset_left = 879.0
+offset_top = 193.0
+offset_right = 1097.0
+offset_bottom = 518.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 20.0
+offset_right = 197.0
+offset_bottom = 64.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=16
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Room not explored[/font]"
+
+[node name="TextureRect7" type="TextureRect" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 71.0
+offset_right = 74.0
+offset_bottom = 119.0
+texture = ExtResource("5_y0fdg")
+
+[node name="TextureRect8" type="TextureRect" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 125.0
+offset_right = 74.0
+offset_bottom = 173.0
+texture = ExtResource("6_8jjqc")
+
+[node name="TextureRect9" type="TextureRect" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 17.0
+offset_right = 74.0
+offset_bottom = 65.0
+texture = ExtResource("7_0lhtf")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 82.0
+offset_right = 205.0
+offset_bottom = 126.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=16
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Room cleared[/font]"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 130.0
+offset_right = 202.0
+offset_bottom = 174.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=16
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Monsters left to kill[/font]"
+
+[node name="TextureRect10" type="TextureRect" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 179.0
+offset_right = 74.0
+offset_bottom = 227.0
+texture = ExtResource("8_ehmq7")
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 192.0
+offset_right = 204.0
+offset_bottom = 236.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=16
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Altar Room[/font]"
+
+[node name="TextureRect11" type="TextureRect" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 256.0
+offset_right = 71.0
+offset_bottom = 304.0
+texture = ExtResource("9_i7bnr")
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="Pause_Menu/Symbol_Explain"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 249.0
+offset_right = 213.0
+offset_bottom = 322.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=16
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Fill with Fire/Water to cast stronger spells[/font]"
+
+[node name="Unpause" type="ColorRect" parent="Pause_Menu"]
+offset_left = 885.0
+offset_top = 542.0
+offset_right = 1090.0
+offset_bottom = 598.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pause_Menu/Unpause"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 10.0
+offset_right = 189.0
+offset_bottom = 50.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Unpause    [/font]"
+
+[node name="Button" type="Button" parent="Pause_Menu/Unpause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="TextureRect7" type="TextureRect" parent="Pause_Menu/Unpause"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 10.0
+offset_right = 188.0
+offset_bottom = 42.0
+mouse_filter = 2
+texture = ExtResource("14_aj3wb")
+
+[node name="Settings_Menu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="BackToMenu" type="ColorRect" parent="Settings_Menu"]
+offset_left = 885.0
+offset_top = 542.0
+offset_right = 1090.0
+offset_bottom = 598.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings_Menu/BackToMenu"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 197.0
+offset_bottom = 50.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Back to Menu [/font]"
+
+[node name="Button" type="Button" parent="Settings_Menu/BackToMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="Settings" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Settings" type="Control" parent="Settings"]
+modulate = Color(1, 1, 1, 0.243137)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 36.0
+offset_top = 191.0
+offset_right = 269.0
+offset_bottom = 480.0
+
+[node name="ColorRect2" type="ColorRect" parent="Settings/Settings"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 125.0
+offset_right = 222.0
+offset_bottom = 138.0
+
+[node name="ColorRect3" type="ColorRect" parent="Settings/Settings"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 420.0
+offset_right = 222.0
+offset_bottom = 433.0
+
+[node name="ColorRect4" type="ColorRect" parent="Settings/Settings"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 138.0
+offset_right = 4.0
+offset_bottom = 420.0
+
+[node name="ColorRect5" type="ColorRect" parent="Settings/Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 138.0
+offset_right = 222.0
+offset_bottom = 420.0
+
+[node name="ColorRect6" type="ColorRect" parent="Settings/Settings"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 307.0
+offset_right = 209.0
+offset_bottom = 324.0
+
+[node name="ColorRect7" type="ColorRect" parent="Settings/Settings"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 194.0
+offset_right = 209.0
+offset_bottom = 211.0
+
+[node name="SoundEffect" type="ColorRect" parent="Settings"]
+offset_left = 40.0
+offset_top = 402.0
+offset_right = 245.0
+offset_bottom = 498.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="Sound_Effect_Slider" type="HSlider" parent="Settings/SoundEffect"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 48.0
+offset_right = 195.0
+offset_bottom = 80.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/SoundEffect"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 21.0
+offset_right = 192.0
+offset_bottom = 61.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Sound Effects[/font]"
+
+[node name="Music" type="ColorRect" parent="Settings"]
+offset_left = 40.0
+offset_top = 515.0
+offset_right = 245.0
+offset_bottom = 611.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="Music_Slider" type="HSlider" parent="Settings/Music"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 48.0
+offset_right = 195.0
+offset_bottom = 80.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/Music"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 21.0
+offset_right = 192.0
+offset_bottom = 61.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Music[/font]"
+
+[node name="FullScreen" type="ColorRect" parent="Settings"]
+offset_left = 40.0
+offset_top = 329.0
+offset_right = 245.0
+offset_bottom = 385.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/FullScreen"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 10.0
+offset_right = 189.0
+offset_bottom = 50.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Fullscreen    [/font]"
+
+[node name="Button" type="Button" parent="Settings/FullScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="TextureRect7" type="TextureRect" parent="Settings/FullScreen"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 10.0
+offset_right = 188.0
+offset_bottom = 42.0
+mouse_filter = 2
+texture = ExtResource("5_atqsg")
+
+[node name="GameGoal" type="ColorRect" parent="Settings"]
+offset_left = 277.0
+offset_top = 161.0
+offset_right = 853.0
+offset_bottom = 385.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="Altar_Empty" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 35.0
+offset_right = 189.0
+offset_bottom = 99.0
+texture = ExtResource("5_nnho1")
+
+[node name="Altar_Full" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 396.995
+offset_top = 36.0
+offset_right = 460.995
+offset_bottom = 100.0
+texture = ExtResource("6_igyif")
+
+[node name="BlobBig" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 35.0
+offset_right = 126.0
+offset_bottom = 99.0
+texture = ExtResource("7_mpvgu")
+flip_h = true
+
+[node name="BlobSmol" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 475.0
+offset_top = 54.0
+offset_right = 507.0
+offset_bottom = 86.0
+texture = ExtResource("7_mpvgu")
+
+[node name="Arrow_Big" type="Control" parent="Settings/GameGoal"]
+anchors_preset = 0
+offset_left = 268.0
+offset_top = 49.0
+offset_right = 382.0
+offset_bottom = 89.0
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Arrow_Big"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = 16.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node2D" type="Node2D" parent="Settings/GameGoal/Arrow_Big"]
+position = Vector2(97, -1)
+rotation = 0.785398
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Arrow_Big/Node2D"]
+offset_right = 29.0
+offset_bottom = 7.0
+
+[node name="Node2D2" type="Node2D" parent="Settings/GameGoal/Arrow_Big"]
+position = Vector2(92, 35)
+rotation = -0.785398
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Arrow_Big/Node2D2"]
+offset_right = 29.0
+offset_bottom = 7.0
+
+[node name="Node2D" type="Node2D" parent="Settings/GameGoal"]
+position = Vector2(-17, -26)
+rotation = 1.5708
+
+[node name="Arrow" type="Control" parent="Settings/GameGoal/Node2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 117.0
+offset_top = -121.0
+offset_right = 231.0
+offset_bottom = -81.0
+scale = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node2D/Arrow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = 16.0
+offset_right = 1.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.473976, 0.473976, 0.473976, 1)
+
+[node name="Node2D" type="Node2D" parent="Settings/GameGoal/Node2D/Arrow"]
+position = Vector2(97, -1)
+rotation = 0.785398
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node2D/Arrow/Node2D"]
+offset_left = 1.44973
+offset_top = -1.37869
+offset_right = 30.4497
+offset_bottom = 5.62131
+color = Color(0.47451, 0.47451, 0.47451, 1)
+
+[node name="Node2D2" type="Node2D" parent="Settings/GameGoal/Node2D/Arrow"]
+position = Vector2(92, 35)
+rotation = -0.785398
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node2D/Arrow/Node2D2"]
+offset_left = 1.37869
+offset_top = 1.44973
+offset_right = 30.3787
+offset_bottom = 8.44973
+color = Color(0.47451, 0.47451, 0.47451, 1)
+
+[node name="Arrow2" type="Control" parent="Settings/GameGoal/Node2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 118.0
+offset_top = -517.0
+offset_right = 232.0
+offset_bottom = -477.0
+scale = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node2D/Arrow2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = 16.0
+offset_right = 1.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Node2D" type="Node2D" parent="Settings/GameGoal/Node2D/Arrow2"]
+position = Vector2(97, -1)
+rotation = 0.785398
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node2D/Arrow2/Node2D"]
+offset_left = 1.44973
+offset_top = -1.37869
+offset_right = 30.4497
+offset_bottom = 5.62131
+
+[node name="Node2D2" type="Node2D" parent="Settings/GameGoal/Node2D/Arrow2"]
+position = Vector2(92, 35)
+rotation = -0.785398
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node2D/Arrow2/Node2D2"]
+offset_left = 1.37869
+offset_top = 1.44973
+offset_right = 30.3787
+offset_bottom = 8.44973
+
+[node name="Hole_Left" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 147.0
+offset_right = 114.0
+offset_bottom = 187.0
+texture = ExtResource("8_3ex44")
+
+[node name="Hole_Left2" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 149.0
+offset_right = 510.0
+offset_bottom = 189.0
+texture = ExtResource("8_3ex44")
+
+[node name="Node" type="Node2D" parent="Settings/GameGoal"]
+position = Vector2(85, 105)
+rotation = 0.785398
+
+[node name="Cross" type="Control" parent="Settings/GameGoal/Node"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2.12132
+offset_top = -12.0208
+offset_right = 42.1213
+offset_bottom = 27.9792
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal/Node/Cross"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Settings/GameGoal/Node/Cross"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_right = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 124.0
+offset_right = 403.0
+offset_bottom = 235.0
+bbcode_enabled = true
+text = "[center][font_size=][font name=assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf]Offer their power at the Altar to make you smaller[/font][/font_size]"
+
+[node name="ColorRect" type="ColorRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 30.0
+offset_right = 324.0
+offset_bottom = 38.0
+scale = Vector2(1.32, 1.32)
+color = Color(0, 0, 0, 1)
+
+[node name="ProgressBar" type="TextureProgressBar" parent="Settings/GameGoal/ColorRect"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 101.0
+offset_bottom = 7.0
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("9_rqftx")
+texture_progress = ExtResource("10_qmny2")
+
+[node name="TextureRect5" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 509.0
+offset_top = 140.0
+offset_right = 530.0
+offset_bottom = 162.0
+texture = ExtResource("15_4huvo")
+expand_mode = 1
+
+[node name="TextureRect6" type="TextureRect" parent="Settings/GameGoal"]
+layout_mode = 0
+offset_left = 273.0
+offset_top = 82.0
+offset_right = 305.0
+offset_bottom = 114.0
+texture = ExtResource("15_4huvo")
+
+[node name="Controlls" type="ColorRect" parent="Settings"]
+offset_left = 275.0
+offset_top = 408.0
+offset_right = 854.0
+offset_bottom = 611.0
+color = Color(0, 0, 0, 0.72549)
+
+[node name="TextureRect" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 27.0
+offset_right = 137.0
+offset_bottom = 91.0
+texture = ExtResource("12_w68vd")
+
+[node name="TextureRect2" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 114.0
+offset_right = 136.0
+offset_bottom = 178.0
+texture = ExtResource("13_cl67o")
+
+[node name="TextureRect3" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 26.0
+offset_right = 341.0
+offset_bottom = 66.0
+texture = ExtResource("14_aj3wb")
+
+[node name="TextureRect4" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect5" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 351.0
+offset_top = 133.0
+offset_right = 391.0
+offset_bottom = 173.0
+texture = ExtResource("15_4huvo")
+
+[node name="TextureRect6" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 26.0
+offset_right = 438.0
+offset_bottom = 66.0
+texture = ExtResource("16_vuc2b")
+
+[node name="TextureRect8" type="TextureRect" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 81.0
+offset_right = 405.0
+offset_bottom = 121.0
+texture = ExtResource("17_7qvni")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 42.0
+offset_right = 218.0
+offset_bottom = 71.0
+bbcode_enabled = true
+text = "[center][font_size=][font name=assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf]Move
+[/font][/font_size]"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 31.0
+offset_right = 531.0
+offset_bottom = 60.0
+bbcode_enabled = true
+text = "[center][font_size=][font name=assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf]Pause
+[/font][/font_size]"
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 125.0
+offset_right = 259.0
+offset_bottom = 154.0
+bbcode_enabled = true
+text = "[center][font_size=][font name=assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf]Cast Spells
+[/font][/font_size]"
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 433.0
+offset_top = 86.0
+offset_right = 552.0
+offset_bottom = 115.0
+bbcode_enabled = true
+text = "[center][font_size=][font name=assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf]Swap Spells
+[/font][/font_size]"
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 414.0
+offset_top = 138.0
+offset_right = 522.0
+offset_bottom = 167.0
+bbcode_enabled = true
+text = "[center][font_size=][font name=assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf]Interact
+[/font][/font_size]"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/Controlls"]
+layout_mode = 0
+offset_left = 348.0
+offset_top = 10.0
+offset_right = 374.0
+offset_bottom = 83.0
+bbcode_enabled = true
+text = "[font_size=50]/[/font_size]"
+
+[node name="Node" type="Node" parent="Settings"]
 
 [node name="EndScreen_Win" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -193,6 +902,90 @@ scale = Vector2(4, 4.25)
 sprite_frames = SubResource("SpriteFrames_275uc")
 autoplay = "default"
 frame_progress = 0.381919
+
+[node name="Text_Header" type="ColorRect" parent="EndScreen_Win"]
+offset_left = 140.0
+offset_top = 22.0
+offset_right = 837.0
+offset_bottom = 232.0
+color = Color(0, 0, 0, 1)
+
+[node name="Text_Bottom" type="ColorRect" parent="EndScreen_Win"]
+offset_left = 10.0
+offset_top = 363.0
+offset_right = 340.0
+offset_bottom = 640.0
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D" parent="EndScreen_Win"]
+position = Vector2(51, 383)
+rotation = 0.610865
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Win/Node2D"]
+offset_top = -16.0
+offset_right = 370.0
+offset_bottom = 44.0
+bbcode_enabled = true
+text = "[font_size=44
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Congratulations[/font][/font_size]"
+
+[node name="Node2D2" type="Node2D" parent="EndScreen_Win"]
+position = Vector2(311, 63)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Win/Node2D2"]
+offset_right = 364.0
+offset_bottom = 40.0
+bbcode_enabled = true
+text = "[font name=\"assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf\"][font_size=22][center]You earned the title of[/center][/font_size][/font]"
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Win"]
+offset_left = 128.0
+offset_top = 118.0
+offset_right = 835.0
+offset_bottom = 241.0
+bbcode_enabled = true
+text = " [font name=\"assets/fonts/kirifont/KiriFont.ttf\"][font_size=40][center]{The Blobman [on Fire] in the Miniature Dungeon}"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="EndScreen_Win"]
+offset_left = 150.0
+offset_top = 121.0
+offset_right = 832.0
+offset_bottom = 240.0
+bbcode_enabled = true
+text = "[font_size=45]                                [                ]"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="EndScreen_Win"]
+offset_left = 795.0
+offset_top = 167.0
+offset_right = 850.0
+offset_bottom = 230.0
+bbcode_enabled = true
+text = "[font_size=40]\""
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="EndScreen_Win"]
+offset_left = 147.0
+offset_top = 122.0
+offset_right = 202.0
+offset_bottom = 185.0
+bbcode_enabled = true
+text = "[font_size=40]\""
+
+[node name="Button" type="Button" parent="EndScreen_Win"]
+offset_left = 837.0
+offset_top = 491.0
+offset_right = 1086.0
+offset_bottom = 588.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Win/Button"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 237.0
+offset_bottom = 97.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Continue[/font][/font_size]"
 
 [node name="EndScreen_Loose" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -227,6 +1020,110 @@ sprite_frames = SubResource("SpriteFrames_275uc")
 autoplay = "default"
 frame_progress = 0.452735
 
+[node name="Text_Header" type="ColorRect" parent="EndScreen_Loose"]
+offset_left = 140.0
+offset_top = 22.0
+offset_right = 837.0
+offset_bottom = 232.0
+color = Color(0, 0, 0, 1)
+
+[node name="Text_Bottom" type="ColorRect" parent="EndScreen_Loose"]
+offset_left = 10.0
+offset_top = 363.0
+offset_right = 340.0
+offset_bottom = 640.0
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D" parent="EndScreen_Loose"]
+position = Vector2(51, 383)
+rotation = 0.610865
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Loose/Node2D"]
+offset_top = -16.0
+offset_right = 370.0
+offset_bottom = 44.0
+bbcode_enabled = true
+text = "[font_size=44
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]Congratulations[/font][/font_size]"
+
+[node name="ColorRect" type="ColorRect" parent="EndScreen_Loose/Node2D"]
+offset_left = -4.0
+offset_top = 12.0
+offset_right = 357.0
+offset_bottom = 20.0
+
+[node name="Node2D2" type="Node2D" parent="EndScreen_Loose"]
+position = Vector2(273, 54)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Loose/Node2D2"]
+offset_left = -25.0
+offset_top = 12.0
+offset_right = 475.0
+offset_bottom = 52.0
+bbcode_enabled = true
+text = "[font name=\"assets/fonts/architect-s-daughter/ArchitectsDaughter.ttf\"][font_size=22][center]You are not wothy of the title[/center][/font_size][/font]"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Loose"]
+offset_left = 128.0
+offset_top = 118.0
+offset_right = 835.0
+offset_bottom = 241.0
+bbcode_enabled = true
+text = " [font name=\"assets/fonts/kirifont/KiriFont.ttf\"][font_size=40][center]{The Blobman [on Fire] in the Miniature Dungeon}"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="EndScreen_Loose"]
+offset_left = 150.0
+offset_top = 121.0
+offset_right = 832.0
+offset_bottom = 240.0
+bbcode_enabled = true
+text = "[font_size=45]                                [                ]"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="EndScreen_Loose"]
+offset_left = 795.0
+offset_top = 167.0
+offset_right = 850.0
+offset_bottom = 230.0
+bbcode_enabled = true
+text = "[font_size=40]\""
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="EndScreen_Loose"]
+offset_left = 147.0
+offset_top = 122.0
+offset_right = 202.0
+offset_bottom = 185.0
+bbcode_enabled = true
+text = "[font_size=40]\""
+
+[node name="Button" type="Button" parent="EndScreen_Loose"]
+offset_left = 837.0
+offset_top = 491.0
+offset_right = 1086.0
+offset_bottom = 588.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="EndScreen_Loose/Button"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 237.0
+offset_bottom = 97.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Continue[/font][/font_size]"
+
 [node name="TitleScreen" parent="." instance=ExtResource("10_eas2w")]
 layer = 4
 visible = false
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("29_7btwb")
+autoplay = true
+bus = &"Music"
+
+[connection signal="pressed" from="Pause_Menu/Unpause/Button" to="." method="toggle_pause"]
+[connection signal="pressed" from="Settings_Menu/BackToMenu/Button" to="." method="toggle_settings"]
+[connection signal="value_changed" from="Settings/SoundEffect/Sound_Effect_Slider" to="." method="set_sound_effect_volume"]
+[connection signal="value_changed" from="Settings/Music/Music_Slider" to="." method="set_music_volume"]
+[connection signal="pressed" from="Settings/FullScreen/Button" to="." method="toggle_fullscreen"]
+[connection signal="pressed" from="EndScreen_Win/Button" to="." method="to_title"]
+[connection signal="pressed" from="EndScreen_Loose/Button" to="." method="to_title"]

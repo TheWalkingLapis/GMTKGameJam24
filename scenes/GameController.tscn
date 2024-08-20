@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://uaqhtbpw28c0"]
+[gd_scene load_steps=7 format=4 uid="uid://uaqhtbpw28c0"]
 
 [ext_resource type="Script" path="res://scripts/game_controller.gd" id="1_7y3ky"]
 [ext_resource type="PackedScene" uid="uid://dynq8fpolkn28" path="res://scenes/Dungeon.tscn" id="1_66ikf"]
 [ext_resource type="PackedScene" uid="uid://vnlt4wxkt7lw" path="res://scenes/Player.tscn" id="3_cxpec"]
 [ext_resource type="TileSet" uid="uid://c72n0a080ao83" path="res://ressources/dungeon_decoration_tiles.tres" id="3_yaqxc"]
 [ext_resource type="TileSet" uid="uid://n5eew6b0lnjh" path="res://ressources/dungeon_tiles.tres" id="4_dtm32"]
+[ext_resource type="AudioStream" uid="uid://b1f0slv0867q6" path="res://assets/sfx/hole_falling.mp3" id="6_o3ld0"]
 
 [node name="GameController" type="Node2D"]
 script = ExtResource("1_7y3ky")
@@ -29,3 +30,6 @@ process_mode = 1
 zoom = Vector2(4, 4)
 
 [node name="Enemies" type="Node" parent="."]
+
+[node name="HoleSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_o3ld0")

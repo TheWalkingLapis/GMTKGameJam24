@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5v7q0ca26m8c"]
+[gd_scene load_steps=14 format=3 uid="uid://dtgrtuurmmxc0"]
 
 [ext_resource type="Script" path="res://scripts/enemy_slime_big.gd" id="1_2vwqd"]
 [ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="2_m57tw"]
@@ -7,22 +7,64 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yhf4s"]
 radius = 4.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sew28"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ottdw"]
 atlas = ExtResource("3_xfbqs")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(0, 16, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xr67t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_et2gh"]
 atlas = ExtResource("3_xfbqs")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01f75"]
+atlas = ExtResource("3_xfbqs")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86vks"]
+atlas = ExtResource("3_xfbqs")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhapk"]
+atlas = ExtResource("3_xfbqs")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aoakg"]
+atlas = ExtResource("3_xfbqs")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gbru"]
+atlas = ExtResource("3_xfbqs")
+region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ryf7"]
+atlas = ExtResource("3_xfbqs")
+region = Rect2(112, 16, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6bisp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sew28")
+"texture": SubResource("AtlasTexture_ottdw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xr67t")
+"texture": SubResource("AtlasTexture_et2gh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01f75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86vks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhapk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aoakg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gbru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ryf7")
 }],
 "loop": true,
 "name": &"default",
@@ -34,11 +76,13 @@ collision_layer = 4
 collision_mask = 11
 motion_mode = 1
 script = ExtResource("1_2vwqd")
+melee_damage = 20
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yhf4s")
 
 [node name="HealthState" parent="." instance=ExtResource("2_m57tw")]
+max_hp = 150
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)

@@ -3,6 +3,7 @@ class_name Dungeon
 
 signal enemy_dead(percentage: float)
 signal trigger_next_floor
+signal set_progress_zero(zero: float)
 
 class Room:
 	var layout: Room_Layout
@@ -42,6 +43,9 @@ class Room:
 @export_category("Prefabs")
 @export var enemies: Array[PackedScene]
 @export var interactable: PackedScene
+
+@export_category("Sounds")
+@export var death_sounds: Array[AudioStreamMP3]
 
 @export_category("Debug")
 @export var generation_output: bool = false
@@ -90,9 +94,6 @@ func _ready():
 
 func set_player(player_):
 	player = player_
-
-func _process(delta):
-	pass
 
 func clear_layer():
 	decoration_tile_map.clear()
@@ -533,7 +534,22 @@ func calculate_monster_number():
 
 func enemy_died():
 	num_enemy_killed += 1
-	enemy_dead.emit(clamp(num_enemy_killed * 1.0 / num_max_enemy_spawns, 0.0, 1.0))
+	if $Enemy_Death_Sound.playing:
+		if $Enemy_Death_Sound2.playing:
+			if not $Enemy_Death_Sound3.playing:
+				$Enemy_Death_Sound3.stream = death_sounds[randi() % death_sounds.size()]
+				$Enemy_Death_Sound3.play()
+		else:
+			$Enemy_Death_Sound2.stream = death_sounds[randi() % death_sounds.size()]
+			$Enemy_Death_Sound2.play()
+	else:
+		$Enemy_Death_Sound.stream = death_sounds[randi() % death_sounds.size()]
+		$Enemy_Death_Sound.play()
+			
+	var enemy_dead_val = clamp(num_enemy_killed * 1.0 / num_max_enemy_spawns, 0.0, 1.0)
+	enemy_dead.emit(enemy_dead_val)
+	if enemy_dead_val == 1.0:
+		$Layer_cleared_Sound.play()
 
 func mapping_room_description_to_tile(top_left, top, top_right, left, middle, right, bottom_left, bottom, bottom_right) -> Vector2i:
 	const nothing = -1
@@ -602,8 +618,9 @@ func handle_hole_interaction():
 func replace_deco_tile(grid_pos, atlas_idx):
 	if atlas_idx == Vector2i(1,6):
 		if(num_enemy_killed == num_max_enemy_spawns):
-			player.set_scaling(-0.25)
+			player.set_scaling(-0.5)
 			ready_for_next_floor = true
+			set_progress_zero.emit(0.0)
 			decoration_tile_map.set_cell(grid_pos, 0, atlas_idx)
 		else:
 			var deco_entity = interactable.instantiate()

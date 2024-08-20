@@ -42,6 +42,20 @@ func set_fire_charges(num_charges: int):
 	fire_notch_2_fire.visible = num_charges >= 2
 	fire_notch_3_fire.visible = num_charges >= 3
 	
+func set_floor(floor: int):
+	if floor == 1:
+		$floor1.visible = true
+		$floor2.visible = false
+		$floor3.visible = false
+	if floor == 2:
+		$floor1.visible = false
+		$floor2.visible = true
+		$floor3.visible = false
+	if floor == 3:
+		$floor1.visible = false
+		$floor2.visible = false
+		$floor3.visible = true
+	
 func set_water_charges(num_charges: int):
 	if num_charges < 0 or num_charges > 3:
 		return
@@ -60,8 +74,8 @@ func set_minimap_rooms(rooms: Array[int]):
 	minimap_bc.texture = minimap_room_textures[rooms[7]]
 	minimap_br.texture = minimap_room_textures[rooms[8]]
 
-func set_minimap_visibility(set_visible: bool):
-	$MiniMap.visible = set_visible
+func set_minimap_visibility(shoudl_be_visible: bool):
+	$MiniMap.visible = shoudl_be_visible
 
 func set_attack_cooldown_bar(percentage: float):
 	attack_cd_bar.value = percentage * 100

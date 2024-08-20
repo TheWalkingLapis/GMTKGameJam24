@@ -1,7 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt3mccu7kmtvn"]
+[gd_scene load_steps=11 format=3 uid="uid://dt3mccu7kmtvn"]
 
 [ext_resource type="Texture2D" uid="uid://dhurpxkx8xoox" path="res://assets/textures/TitleScreen.png" id="1_8fhr2"]
 [ext_resource type="Script" path="res://scripts/title_screen.gd" id="1_jd6ar"]
+[ext_resource type="Texture2D" uid="uid://cln4wixxhcvlm" path="res://assets/textures/character_sprites.png" id="3_p8f6x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cg6eb"]
+atlas = ExtResource("3_p8f6x")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d1kq"]
+atlas = ExtResource("3_p8f6x")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryx84"]
+atlas = ExtResource("3_p8f6x")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjhr1"]
+atlas = ExtResource("3_p8f6x")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4jkn"]
+atlas = ExtResource("3_p8f6x")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7kd1"]
+atlas = ExtResource("3_p8f6x")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pd2aj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cg6eb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d1kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryx84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjhr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4jkn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7kd1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_jd6ar")
@@ -16,55 +67,38 @@ texture = ExtResource("1_8fhr2")
 expand_mode = 1
 
 [node name="Settings_Button" type="Button" parent="."]
-visible = false
 offset_left = 30.0
 offset_top = 399.0
 offset_right = 240.0
 offset_bottom = 548.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Settings_Button"]
-offset_top = 40.0
-offset_right = 210.0
-offset_bottom = 111.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = -18.0
+offset_top = 41.0
+offset_right = 220.0
+offset_bottom = 99.0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[center][font_size=50]START[/font_size][/center]"
+text = "[center][font_size=40] [font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]SETTINGS[/font][/font_size][/center]"
 
 [node name="Start_Button" type="Button" parent="."]
-offset_left = 472.0
+offset_left = 913.0
 offset_top = 398.0
-offset_right = 682.0
+offset_right = 1123.0
 offset_bottom = 547.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Start_Button"]
 layout_mode = 2
-offset_top = 40.0
-offset_right = 210.0
-offset_bottom = 111.0
+offset_left = 1.0
+offset_top = 41.0
+offset_right = 199.0
+offset_bottom = 99.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 bbcode_enabled = true
-text = "[center][font_size=50]START[/font_size][/center]"
-
-[node name="Settings_Button3" type="Button" parent="."]
-visible = false
-offset_left = 914.0
-offset_top = 398.0
-offset_right = 1124.0
-offset_bottom = 547.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Settings_Button3"]
-offset_top = 40.0
-offset_right = 210.0
-offset_bottom = 111.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-bbcode_enabled = true
-text = "[center][font_size=50]START[/font_size][/center]"
+text = "[center][font_size=40] [font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"]START[/font][/font_size][/center]"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 256.0
@@ -73,16 +107,22 @@ offset_right = 891.0
 offset_bottom = 271.0
 color = Color(0, 0, 0, 0.631373)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="RichTextLabel2" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 9.0
+offset_right = 633.0
+offset_bottom = 189.0
 bbcode_enabled = true
-text = "[center][font_size=40]The Blobman [on Fire] in the Miniature Dungeon[/font_size][/center]"
+text = " [font name=\"assets/fonts/kirifont/KiriFont.ttf\"][font_size=42][center]{The Blobman [on Fire] in the Miniature Dungeon}"
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1059, 241)
+scale = Vector2(9.375, 8.8125)
+sprite_frames = SubResource("SpriteFrames_pd2aj")
+animation = &"idle"
+frame_progress = 0.272264
+speed_scale = 0.75
+
+[connection signal="pressed" from="Settings_Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Start_Button" to="." method="_on_start_button_pressed"]

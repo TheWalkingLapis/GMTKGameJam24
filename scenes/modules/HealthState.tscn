@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://cofvcurivi13m"]
+[gd_scene load_steps=7 format=3 uid="uid://cofvcurivi13m"]
 
 [ext_resource type="Script" path="res://scripts/health_state.gd" id="1_0nmuw"]
+[ext_resource type="Texture2D" uid="uid://d0grn6aedjk2s" path="res://assets/textures/Attack_Cooldown_Under.png" id="2_kykqw"]
+[ext_resource type="Texture2D" uid="uid://ihds071doyid" path="res://assets/textures/health_almost_dead.png" id="2_lctb3"]
+[ext_resource type="Texture2D" uid="uid://cnhnpajlo40b" path="res://assets/textures/health_critical.png" id="3_l1xh7"]
+[ext_resource type="Texture2D" uid="uid://bgwv6vh5q2l8q" path="res://assets/textures/health_okay.png" id="4_5g3c5"]
+[ext_resource type="Texture2D" uid="uid://bqdlxf2bxsw33" path="res://assets/textures/health_healthy.png" id="5_arvap"]
 
-[node name="HealthState" type="Node"]
+[node name="HealthState" type="Node2D"]
 script = ExtResource("1_0nmuw")
+health_textures = Array[Texture]([ExtResource("2_lctb3"), ExtResource("3_l1xh7"), ExtResource("4_5g3c5"), ExtResource("5_arvap")])
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -8.0
+offset_top = -9.0
+offset_right = 8.0
+offset_bottom = -7.0
+max_value = 1.0
+step = 0.05
+nine_patch_stretch = true
+texture_under = ExtResource("2_kykqw")
+texture_progress = ExtResource("5_arvap")

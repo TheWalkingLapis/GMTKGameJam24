@@ -12,7 +12,7 @@ enum SpellName {FIREBALL, WATERBALL, BASIC_PLAYER_BALL}
 var shot_by_player: bool
 var cast_direction: Vector2
 
-func init(shot_by_player_: bool, dir: Vector2):
+func init(_shot_by_player_: bool, _dir: Vector2):
 	print("Someone didn't implement the init func D:")
 
 func die():

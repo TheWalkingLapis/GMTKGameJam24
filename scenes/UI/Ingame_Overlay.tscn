@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://4q773oh3phsi"]
+[gd_scene load_steps=28 format=3 uid="uid://4q773oh3phsi"]
 
 [ext_resource type="Texture2D" uid="uid://dkj1sqj8s48lf" path="res://assets/textures/UI_Border.png" id="1_1l26e"]
 [ext_resource type="Script" path="res://scripts/ingame_overlay.gd" id="1_aut26"]
@@ -18,6 +18,58 @@
 [ext_resource type="Texture2D" uid="uid://by5ghool0gvo8" path="res://assets/textures/minimap_not_explored.png" id="14_e0547"]
 [ext_resource type="Texture2D" uid="uid://dlelxt0vx4457" path="res://assets/textures/minimap_cleared.png" id="15_vkcm6"]
 [ext_resource type="Texture2D" uid="uid://cd0daqwgacvhi" path="res://assets/textures/minimap_no_room.png" id="16_scwgb"]
+[ext_resource type="Texture2D" uid="uid://c7a6d05wnbo5q" path="res://assets/textures/kill_progress.png" id="19_k1s28"]
+[ext_resource type="Texture2D" uid="uid://cln4wixxhcvlm" path="res://assets/textures/character_sprites.png" id="20_3cxdd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7u3ar"]
+atlas = ExtResource("20_3cxdd")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24l2m"]
+atlas = ExtResource("20_3cxdd")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uoe4b"]
+atlas = ExtResource("20_3cxdd")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3pot"]
+atlas = ExtResource("20_3cxdd")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4d1om"]
+atlas = ExtResource("20_3cxdd")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvtda"]
+atlas = ExtResource("20_3cxdd")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ijhgh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7u3ar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24l2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uoe4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3pot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4d1om")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvtda")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="IngameOverlay" type="CanvasLayer"]
 script = ExtResource("1_aut26")
@@ -139,7 +191,7 @@ offset_right = 645.0
 offset_bottom = 78.0
 nine_patch_stretch = true
 texture_under = ExtResource("4_rrq8h")
-texture_progress = ExtResource("5_6jj0a")
+texture_progress = ExtResource("19_k1s28")
 
 [node name="MiniMap" type="Control" parent="."]
 layout_mode = 3
@@ -207,3 +259,41 @@ texture = ExtResource("15_vkcm6")
 [node name="BR" type="TextureRect" parent="MiniMap/GridContainer"]
 layout_mode = 2
 texture = ExtResource("16_scwgb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MiniMap"]
+position = Vector2(68.0672, 68.0672)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_ijhgh")
+animation = &"idle"
+autoplay = "idle"
+speed_scale = 0.5
+
+[node name="floor1" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 841.0
+offset_top = 12.0
+offset_right = 964.0
+offset_bottom = 44.0
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Floor 1/3[/font]"
+
+[node name="floor2" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 841.0
+offset_top = 12.0
+offset_right = 964.0
+offset_bottom = 44.0
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Floor 2/3[/font]"
+
+[node name="floor3" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 818.0
+offset_top = 12.0
+offset_right = 964.0
+offset_bottom = 44.0
+bbcode_enabled = true
+text = "[center][font_size=24
+][font name=\"assets/fonts/montreal/Montreal-Regular.ttf\"] Final Floor[/font]"

@@ -34,11 +34,13 @@ collision_layer = 4
 collision_mask = 11
 motion_mode = 1
 script = ExtResource("1_yyq57")
+movement_speed = 4000.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yhf4s")
 
 [node name="HealthState" parent="." instance=ExtResource("2_mb87q")]
+max_hp = 50
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)

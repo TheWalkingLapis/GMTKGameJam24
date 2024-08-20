@@ -7,13 +7,6 @@ var pattern_id: int = -1
 ## Whether there exists a door in N E S W direction
 @export var door_directions: Dictionary = {"N": false, "E": false, "S": false, "W": false}
 
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func get_num_doors() -> int:
 	var doors = 0
 	if door_directions["N"]: doors += 1

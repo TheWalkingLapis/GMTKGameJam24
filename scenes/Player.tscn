@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://vnlt4wxkt7lw"]
+[gd_scene load_steps=38 format=3 uid="uid://vnlt4wxkt7lw"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wya4p"]
 [ext_resource type="Texture2D" uid="uid://cln4wixxhcvlm" path="res://assets/textures/character_sprites.png" id="2_trcvs"]
@@ -7,9 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://cofvcurivi13m" path="res://scenes/modules/HealthState.tscn" id="4_xijir"]
 [ext_resource type="PackedScene" uid="uid://cvn3lvlcc071p" path="res://scenes/spells/WaterBall.tscn" id="5_p5ekj"]
 [ext_resource type="PackedScene" uid="uid://cau70tp464cpx" path="res://scenes/spells/BasicPlayerBall.tscn" id="6_eydmc"]
+[ext_resource type="AudioStream" uid="uid://dl34exsxxtd3t" path="res://assets/sfx/fire_ball_attack.mp3" id="8_8vb5b"]
+[ext_resource type="AudioStream" uid="uid://cgvojyku64ko" path="res://assets/sfx/water_splash_attack.mp3" id="9_i35rr"]
+[ext_resource type="AudioStream" uid="uid://dpbb54jbcac0x" path="res://assets/sfx/magic_attack.mp3" id="10_8nbxr"]
+[ext_resource type="AudioStream" uid="uid://b05pchbavqx5n" path="res://assets/sfx/fire_extinguish.mp3" id="11_lrl7j"]
+[ext_resource type="AudioStream" uid="uid://ckrpf6uebu0lx" path="res://assets/sfx/water_splash_collect.mp3" id="12_1701m"]
+[ext_resource type="AudioStream" uid="uid://bjpgnfh0e7drx" path="res://assets/sfx/Player_Damage_1.mp3" id="13_71r6d"]
+[ext_resource type="AudioStream" uid="uid://c42ggfblmqfsj" path="res://assets/sfx/Player_Damage_2.mp3" id="14_vgse7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bdiql"]
-radius = 5.0
+radius = 4.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2h68"]
 atlas = ExtResource("2_trcvs")
@@ -181,6 +188,7 @@ collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_wya4p")
 speed = 100.0
+damage_sounds = Array[AudioStream]([ExtResource("13_71r6d"), ExtResource("14_vgse7")])
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -189,9 +197,55 @@ shape = SubResource("CircleShape2D_bdiql")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jlo0q")
 animation = &"walk"
+autoplay = "walk"
 
 [node name="CombatModule" parent="." instance=ExtResource("3_uiaik")]
 is_player = true
 spells = Array[PackedScene]([ExtResource("4_vuj41"), ExtResource("5_p5ekj"), ExtResource("6_eydmc")])
 
 [node name="HealthState" parent="." instance=ExtResource("4_xijir")]
+show_hp = false
+
+[node name="FireBall_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_8vb5b")
+volume_db = -5.0
+bus = &"SoundEffects"
+
+[node name="WaterBall_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_i35rr")
+volume_db = 5.0
+bus = &"SoundEffects"
+
+[node name="Basic_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_8nbxr")
+bus = &"SoundEffects"
+
+[node name="FireCharge_Gain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_lrl7j")
+volume_db = 3.0
+bus = &"SoundEffects"
+
+[node name="FireCharge_Gain2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_lrl7j")
+volume_db = 3.0
+bus = &"SoundEffects"
+
+[node name="WaterCharge_Gain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_1701m")
+bus = &"SoundEffects"
+
+[node name="WaterCharge_Gain2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_1701m")
+bus = &"SoundEffects"
+
+[node name="PlayerDamage1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_71r6d")
+bus = &"SoundEffects"
+
+[node name="PlayerDamage2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_vgse7")
+bus = &"SoundEffects"
+
+[node name="PlayerDamage3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_vgse7")
+bus = &"SoundEffects"
