@@ -5,6 +5,7 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jcr28"]
 texture = ExtResource("1_gu18a")
 0:1/animation_columns = 2
+0:1/animation_mode = 1
 0:1/animation_frame_0/duration = 1.0
 0:1/animation_frame_1/duration = 1.0
 0:1/0 = 0
@@ -12,6 +13,7 @@ texture = ExtResource("1_gu18a")
 1:2/0 = 0
 2:2/0 = 0
 0:3/animation_columns = 2
+0:3/animation_mode = 1
 0:3/animation_frame_0/duration = 1.0
 0:3/animation_frame_1/duration = 1.0
 0:3/0 = 0
@@ -32,6 +34,7 @@ texture = ExtResource("1_gu18a")
 2:8/0 = 0
 3:8/0 = 0
 0:0/animation_columns = 6
+0:0/animation_mode = 1
 0:0/animation_frame_0/duration = 1.0
 0:0/animation_frame_1/duration = 1.0
 0:0/animation_frame_2/duration = 1.0
